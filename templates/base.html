@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Let's explore!</title>
+	</head>
+
+	<body>
+
+	  <ul>
+	    {% for message in get_flashed_messages() %}
+	        <li>{{ message }}</li>
+	    {% endfor %}
+	  </ul>
+
+	  <div>
+	  	<input type="text">
+	  </div>
+
+
+{% block content %} put your content here {% endblock %}
+	</body>
+
+</html>
