@@ -6,19 +6,31 @@
 <!-- LINK ALL THE THINGS!!! -->
 	<link rel="stylesheet" href="/static/style.css"></script>
 
+	<!-- LINK TO JS FILE BY SUSAN -->
+		<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+
 	<!-- LINK TO JQUERY UI FOR AUTOCOMPLETE -->
 		<link rel="stylesheet" href="../static/js/jquery-ui.min.css">
 		<script src="../static/js/external/jquery/jquery.js"></script>
 		<script src="../static/js/jquery-ui.min.js"></script>
 
-	<!-- LINK TO JS FILE BY SUSAN -->
-		<script src="../static/travel.js"></script>
-		<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 
 	<!-- LINK TO MAPBOX -->
-		<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+		<meta charset=utf-8 />
 		<script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.0/mapbox.js'></script>
 		<link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.0/mapbox.css' rel='stylesheet' />
+
+
+	<!-- LINK TO GOOGLE CHARTS -->
+		<script type="text/javascript"
+	          src="https://www.google.com/jsapi?autoload={
+	            'modules':[{
+	              'name':'visualization',
+	              'version':'1',
+	              'packages':['corechart']
+	            }]
+	          }">
+	    </script>
 
 	</head>
 
@@ -33,65 +45,42 @@
 
 
 	<!-- THIS IS THE MAIN USER FORM -->	  
-		<div class="user-form">
-		<form action="/airfaresearch" id="faresearchform">
+		<div class="user-travel-form">
+		<form id="faresearchform">
 		  <label>Enter Origin Airport: </label>
-		  	<input id="airportcodes" name="origin">
+		  	<input id="airportcodes" name="origin" required>
 		<br>
 		  <label>Earliest Departure Date:</lable>
-		  	<input type="date" name="earliest-departure-date">
+		  	<input type="date" name="earliest-departure-date" id="early-depart-field" required>
 		<br>
 		  <label>Latest Departure Date:</lable>
-		  	<input type="date" name="latest-departure-date">
+		  	<input type="date" name="latest-departure-date" id="late-depart-field" required>
 		<br>
 		  <label>Length of Stay:</lable>
-		  	<input type="text" name="length-of-stay">
+		  	<input type="text" name="length-of-stay" id="length-of-stay-field" required>
 		<br>
 		  <label>Max Budget:</lable>
-		  	<input type="text" name="max-budget">
+		  	<input type="text" name="max-budget" id="max-budget-field" required>
 		<br>
-		  <input id="faresearch" type="submit" value="Let's Go!">
+		  <p>FOR TESTING PURPOSES, JUST CLICK HERE:
+		  <input type="submit" value="Let's Go!"></p>
 		</form>
 		</div>
 
 <br>
 <br>
-	<p id="faredetails"></p>
-<br>
-
 	<!-- TESTING MAP STUFF -->
-	<div id='map'></div>
+	<div id='map-container'>
+		<div id='map-leaflet' class='map'></div>
+	</div>
 
 
+	<div id="curve_chart">
+	</div>
 
 
-
-<!-- MUST MOVE THIS AUTOCOMPLETE FUNCTION TO JS FILE LATER -->
-		<script>
-
-		  $(function() {
-		    $("#airportcodes").autocomplete({
-		      source: 	function(request, response) {
-		      				$.ajax({
-					      		url: "/autocomplete",
-					      		dataType: "json",
-					      		data: {
-					      			term: request.term
-					      		}})
-				      		.done(function(data) {
-				      			//Map data to correct format
-				      			response (data);
-				      			}
-				      			//return response(/*CORRECT*/);
-				      		)};
-		      				//return response([{label: 'Dog', value: 'Cat'}]);
-				})
-			});
-
-
-		  </script>
-
- 
+		  <!-- THIS IS LINKING SUSAN'S JS FILE -->
+		<script src="../static/travel.js"></script>
 	</body>
 
 </html>

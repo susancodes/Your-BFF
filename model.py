@@ -5,18 +5,20 @@ db = SQLAlchemy()
 
 # this is for airport codes database
 class AirportCode(db.Model):
-	"""Airport code for departure and arrival destinations."""
+    """Airport code for departure and arrival destinations."""
 
-	__tablename__ = "airportcodes"
+    __tablename__ = "airportcodes"
 
-	code = db.Column(db.String(3), primary_key=True)
-	location = db.Column(db.String(50), nullable=False)
+    code = db.Column(db.String(3), primary_key=True)
+    location = db.Column(db.String(50), nullable=False)
+    longitude = db.Column(db.Float)
+    latitude = db.Column(db.Float)
 
-	def __repr__ (self):
-		"""Statement when printed"""
 
-		return "<Object Airport Code:%s for %s>" % (self.code, self.location)
+    def __repr__ (self):
+        """Statement when printed."""
 
+        return "<Object Airport Code:%s for %s>" % (self.code, self.location)
 
 
 
@@ -30,9 +32,13 @@ def connect_to_db(app):
     db.app = app
     db.init_app(app)
 
+
+
+
 if __name__ == "__main__":
-    # allows working with the database directly
+# allows working with the database directly
 
     from server import app
     connect_to_db(app)
     print "Connected to DB."
+

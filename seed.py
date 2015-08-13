@@ -17,8 +17,29 @@ def load_airportcodes():
     	db.session.commit()
 
 
+def load_coordinates():
+    """Load coordinates of the airports."""
+    the_file = open("./seed_data/airportcodescoordinates.txt")
+    for line in the_file:
+        line = line.decode(encoding="UTF-8")
+        split_line = line.rstrip().split(",")
+        longitude = split_line[7]
+        latitude = split_line[6]
+        airport_code = split_line[4]
+        airport_code = airport_code[1:-1]
+        if airport_code:
+            airport_code_in_db = AirportCode.query.filter(AirportCode.code==airport_code).first()
+            if airport_code_in_db:
+                airport_code_in_db.longitude = longitude
+                airport_code_in_db.latitude = latitude
+                print longitude, latitude
+                db.session.commit()
+            else:
+                print "not in database"
+
 
 if __name__ == "__main__":
     connect_to_db(app)
 
     load_airportcodes()
+    load_coordinates()
