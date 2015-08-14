@@ -22,6 +22,8 @@ class AirportCode(db.Model):
 
 
 
+
+
 #########THIS CONNECTS TO DATABASE SO WE CAN WORK INTERACTIVELY IN CONSOLE
 
 def connect_to_db(app):

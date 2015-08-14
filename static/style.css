@@ -12,9 +12,18 @@ body {
 #map-container {
 	position: relative;
 	top: 0;
-	height: 400px;
+	height: 600px;
 }
 
 
 .lowestfarecontent {
+}
+
+#fare-search-button {
+	text-align: center;
+	align: center;
+}
+
+.ui-menu {
+	background-color: #F7FBFF;
 }

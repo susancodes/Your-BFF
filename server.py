@@ -70,10 +70,21 @@ def airfare_search():
 
 	response = requests.get(final_url, headers=headers)
 
-	response_text = response.json()
+	status_code = response.status_code
 
-	pprint.pprint(response_text)
+	print "STATUS CODE HERE:", status_code
 
+	# trying to handle errors and bad requests
+	if status_code == 200:
+		response_text = response.json()
+
+		pprint.pprint(response_text)
+
+		return jsonify(results=response_text)
+
+	else: 
+		flash("Sorry, you're too broke to fly. Consider a road trip.")
+		return redirect("/")
 
 	# response_json = response.json()
 
@@ -90,7 +101,6 @@ def airfare_search():
 	# 	fare_dictionary[destination] = about_fare_dict
 	# print fare_dictionary
 
-	return jsonify(results=response_text)
 
 
 

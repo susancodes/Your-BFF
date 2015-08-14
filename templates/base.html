@@ -6,7 +6,7 @@
 <!-- LINK ALL THE THINGS!!! -->
 	<link rel="stylesheet" href="/static/style.css"></script>
 
-	<!-- LINK TO JS FILE BY SUSAN -->
+	<!-- LINK TO JQUERY FILE -->
 		<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 
 	<!-- LINK TO JQUERY UI FOR AUTOCOMPLETE -->
@@ -36,36 +36,40 @@
 
 	<body>
 
-	<!-- THIS IS WHERE FLASH MESSAGES GO -->	  
+	<!-- THIS IS WHERE FLASH MESSAGES GO -->	
+	<div class="container-fluid">
 		<ul>
 		    {% for message in get_flashed_messages() %}
 		        <li>{{ message }}</li>
 		    {% endfor %}
 		</ul>
 
+		<div id="flash-message">
+		</div>
+
 
 	<!-- THIS IS THE MAIN USER FORM -->	  
 		<div class="user-travel-form">
-		<form id="faresearchform">
-		  <label>Enter Origin Airport: </label>
-		  	<input id="airportcodes" name="origin" required>
-		<br>
-		  <label>Earliest Departure Date:</lable>
-		  	<input type="date" name="earliest-departure-date" id="early-depart-field" required>
-		<br>
-		  <label>Latest Departure Date:</lable>
-		  	<input type="date" name="latest-departure-date" id="late-depart-field" required>
-		<br>
-		  <label>Length of Stay:</lable>
-		  	<input type="text" name="length-of-stay" id="length-of-stay-field" required>
-		<br>
-		  <label>Max Budget:</lable>
-		  	<input type="text" name="max-budget" id="max-budget-field" required>
-		<br>
-		  <p>FOR TESTING PURPOSES, JUST CLICK HERE:
-		  <input type="submit" value="Let's Go!"></p>
-		</form>
+			<form id="faresearchform">
+			  <label>Enter Origin Airport: </label>
+			  	<input id="airportcodes" name="origin" placeholder="Origin Airport" required>
+			<br>
+			  <label>Earliest Departure Date:</label>
+			  	<input type="date" name="earliest-departure-date" id="early-depart-field" required>
+			<br>
+			  <label>Latest Departure Date:</label>
+			  	<input type="date" name="latest-departure-date" id="late-depart-field" required>
+			<br>
+			  <label>Length of Travel (in days):</label>
+			  	<input type="text" name="length-of-stay" id="length-of-stay-field" placeholder="3" required>
+			<br>
+			  <label>Max Budget ($):</label>
+			  	<input type="text" name="max-budget" id="max-budget-field" placeholder="200" required>
+			<br>
+			 	<input type="submit" value="Let's Go!">
+			</form>
 		</div>
+	</div>
 
 <br>
 <br>
