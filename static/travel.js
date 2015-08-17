@@ -8,7 +8,6 @@ var mapLeaflet = L.mapbox.map('map-leaflet', 'susancodes.1e9ac8a5')
   .setView([37.8, -96], 4)
 
 
-
 // Style the marker icon
 var myIcon = L.icon({
 	iconUrl: '/static/img/airplane-icon.png',
@@ -29,8 +28,6 @@ function getFareResults(evt){
 	evt.preventDefault();
 	console.log("prevented default");
 
-	// GETTING FARE RESULTS WITH AJAX
-	// $(".map").style.visibility = "visible";
 
 	// sending GET request to get form values
 	var url = "/airfaresearch?origin=" + $("#airportcodes").val() + 
@@ -44,10 +41,10 @@ function getFareResults(evt){
 
 	// Making an ajax call to get the API response
 	$.get(url, function (data){
+
 		console.log(data.data);
 		var fareResults = data.results;
-		console.log(fareResults);
-		console.log(url);
+
 		processFareResults(fareResults, mapLeaflet);			
 		})
 

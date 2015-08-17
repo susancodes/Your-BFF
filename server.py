@@ -13,6 +13,9 @@ app = Flask(__name__)
 
 app.secret_key = "Susan Secret Key"
 
+
+
+
 @app.route("/")
 def homepage():
 	"""Displays webapp/homepage."""
@@ -30,13 +33,17 @@ def autocomplete():
 
 	query = AirportCode.query.filter(db.or_(AirportCode.code.contains(search_value), 
 											AirportCode.location.contains(search_value))).all()
+	
 	suggestion_list = []
+
 	for item in query:
 		code = item.code
 		location = item.location
 		suggestion_string = "(%s) %s" %(code, location)
 		suggestion_list.append(suggestion_string)
+	
 	print suggestion_list
+	
 	return jsonify(data=suggestion_list)
 
 
@@ -67,14 +74,12 @@ def airfare_search():
 	# calling the API
 	response = requests.get(final_url, headers=headers)
 
-	# checking the status code of API response
-	status_code = response.status_code
-	print "STATUS CODE HERE:", status_code
 
-
+	# converting response to json
 	response_text = response.json()
 
 	pprint.pprint(response_text)
+
 
 	return jsonify(results=response_text)
 	
@@ -90,6 +95,9 @@ def campsite_search():
 	origin_object = AirportCode.query.filter(AirportCode.code==origin).first()
 
 	print origin_object
+
+	# chose 0.8 because 1.0 degrees is about 69 miles
+	# I want it around 50 miles radius 
 
 	lat = origin_object.latitude
 	lower_lat = lat - 0.8
@@ -111,10 +119,9 @@ def campsite_search():
 	query_lat_lon = query_lat.filter(Campsite.latitude > lower_lat,
 											Campsite.longitude > lower_lon).all()
 
-	length = len(query_lat_lon)
-
 	campsite_list = []
 
+	# building my dictionary to pass as JSON
 	for item in query_lat_lon:
 		name = item.name
 		latitude = item.latitude
@@ -138,20 +145,6 @@ def campsite_search():
 	print campsite_list
 
 	return jsonify(data=campsite_list)
-	
-	# fare_dictionary = {}
-	# for item in response_json["FareInfo"]:
-	# 	destination = item.get("DestinationLocation")
-	# 	low_nonstop_fare = item.get("LowestNonStopFare").get("Fare")
-	# 	depart_date = item.get("DepartureDateTime")
-	# 	return_date = item.get("ReturnDateTime")
-	# 	about_fare_dict = {"destination": destination, 
-	# 						"low_nonstop_fare": low_nonstop_fare,
-	# 						"depart_date": depart_date,
-	# 						"return_date": return_date}
-	# 	fare_dictionary[destination] = about_fare_dict
-	# print fare_dictionary
-
 
 
 
