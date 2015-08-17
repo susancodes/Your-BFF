@@ -27,3 +27,10 @@ body {
 .ui-menu {
 	background-color: #F7FBFF;
 }
+
+
+#flash-message {
+	background-color: #f7fbff;
+	font-size: 16;
+	font-style: bold;
+}

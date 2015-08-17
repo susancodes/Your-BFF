@@ -1,4 +1,4 @@
-from model import AirportCode, connect_to_db, db
+from model import AirportCode, Campsite, connect_to_db, db
 from server import app
 
 
@@ -38,8 +38,40 @@ def load_coordinates():
                 print "not in database"
 
 
+def load_campsites(file_name):
+    """Load campsites info into database."""
+    the_file = open(file_name)
+    for line in the_file:
+        line = _removeNonAscii(line)
+        line = line.decode(encoding="UTF-8")
+        split_line = line.rstrip().split(",")
+        longitude = split_line[0]
+        latitude = split_line[1]
+        name = split_line[4]
+        phone = split_line[6]
+        dates = split_line[7]
+        comments = split_line[8]
+        campsites = split_line[9]
+
+        new_campsite = Campsite(name=name, longitude=longitude, latitude=latitude, phone=phone, dates=dates, comments=comments, campsites=campsites)
+        print new_campsite
+        db.session.add(new_campsite)
+        db.session.commit()
+
+def _removeNonAscii(s): 
+    return "".join(i for i in s if ord(i)<128)
+
 if __name__ == "__main__":
     connect_to_db(app)
 
     load_airportcodes()
     load_coordinates()
+    load_campsites("./seed_data/CanadaCamp.csv")
+    load_campsites("./seed_data/MidwestCamp.csv")
+    load_campsites("./seed_data/NortheastCamp.csv")
+    load_campsites("./seed_data/SouthCamp.csv")
+    load_campsites("./seed_data/SouthwestCamp.csv")
+    load_campsites("./seed_data/WestCamp.csv")
+
+
+

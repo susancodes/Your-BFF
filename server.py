@@ -1,4 +1,4 @@
-from model import AirportCode, connect_to_db, db
+from model import AirportCode, Campsite, connect_to_db, db
 from flask import Flask, render_template, redirect, request, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -45,19 +45,13 @@ def autocomplete():
 def airfare_search():
 	"""Using Sabre API request with Bridge, returning fares info."""
 
+	# getting the form values that the user has provided
 	origin = request.args.get('origin')
-	print origin
 	origin = origin[1:4]
 	earliest_departure = request.args.get('earliest-departure-date')
 	latest_departure = request.args.get('latest-departure-date')
-	print earliest_departure, latest_departure
 	length_of_stay = request.args.get('length-of-stay')
 	max_budget = request.args.get('max-budget')
-
-	# below link for the Hotwire API
-	# base_url = "http://api.hotwire.com/v1/tripstarter/air?apikey=dbmnd3ph48j6x5e5y8jbkuzn"
-	# final_url= "%s&origin=%s&price=*~%s" % (
-	# 	base_url, origin, max_budget)
 
 	headers = {"Authorization": "Bearer T1RLAQL/QfI2vTvwGfizaSk3pXYlMh5wFRA9+OLqQ/h/YpxelgqOaRpqAACgtWo5h/kal3de+BbK0myvIVkRW3Wrf4lMaGiqZUHe4EzdEMYR/sicpLqBE/bjRUcdTwm3RhBVTUdWPEmwboT+LgPLZlEqILTUTNV7TC4B8/IuUvh6Apgjf0UWZVrxJr/lvVA00gD/+Zu7AGt/NljQg+TdaXX3HxWFbO9MaxJG9+pxfaifdUEATwb+i2I5kRUmrlwgDUUnz8hkc1lIYtN+xg**",
 	"X-Originating-Ip": "50.197.129.150"}
@@ -66,28 +60,85 @@ def airfare_search():
 	# param_url = "origin=SFO&earliestdeparturedate=2015-09-01&latestdeparturedate=2015-09-03&lengthofstay=3&maxfare=200&pointofsalecountry=US&ac2lonlat=1" 
 	param_url = "origin=%s&earliestdeparturedate=%s&latestdeparturedate=%s&lengthofstay=%s&maxfare=%s&pointofsalecountry=US&ac2lonlat=1" % (
 		origin, earliest_departure, latest_departure, length_of_stay, max_budget)
+	
+	# putting together the url to request to Sabre's API
 	final_url = base_url + param_url
 
+	# calling the API
 	response = requests.get(final_url, headers=headers)
 
+	# checking the status code of API response
 	status_code = response.status_code
-
 	print "STATUS CODE HERE:", status_code
 
-	# trying to handle errors and bad requests
-	if status_code == 200:
-		response_text = response.json()
 
-		pprint.pprint(response_text)
+	response_text = response.json()
 
-		return jsonify(results=response_text)
+	pprint.pprint(response_text)
 
-	else: 
-		flash("Sorry, you're too broke to fly. Consider a road trip.")
-		return redirect("/")
+	return jsonify(results=response_text)
+	
 
-	# response_json = response.json()
+@app.route("/campsitesearch")
+def campsite_search():
+	"""Search for campsite if no flight results found."""
 
+	origin = request.args.get('origin')
+	origin = origin[1:4]
+	print origin
+
+	origin_object = AirportCode.query.filter(AirportCode.code==origin).first()
+
+	print origin_object
+
+	lat = origin_object.latitude
+	lower_lat = lat - 0.8
+	higher_lat = lat + 0.8
+
+	print lat, lower_lat, higher_lat
+
+	lon = origin_object.longitude
+	lower_lon = lon - 0.8
+	higher_lon = lon + 0.8
+
+	print lon, lower_lon, higher_lon
+
+	query_lat = Campsite.query.filter(Campsite.latitude < higher_lat,
+											Campsite.longitude < higher_lon)
+
+	length_first = len(query_lat.all())
+
+	query_lat_lon = query_lat.filter(Campsite.latitude > lower_lat,
+											Campsite.longitude > lower_lon).all()
+
+	length = len(query_lat_lon)
+
+	campsite_list = []
+
+	for item in query_lat_lon:
+		name = item.name
+		latitude = item.latitude
+		longitude = item.longitude
+		phone = item.phone
+		dates = item.dates
+		comments = item.comments
+		campsites = item.campsites
+		campsite_info = {"name": name,
+						"latitude": latitude, 
+						"longitude": longitude, 
+						"phone": phone, 
+						"dates": dates, 
+						"comments": comments, 
+						"campsites": campsites}
+		campsite_list.append(campsite_info)
+
+	print "first: ", length_first
+	print "second: ", length
+
+	print campsite_list
+
+	return jsonify(data=campsite_list)
+	
 	# fare_dictionary = {}
 	# for item in response_json["FareInfo"]:
 	# 	destination = item.get("DestinationLocation")

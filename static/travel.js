@@ -1,32 +1,36 @@
 
-function initializeMap(evt){
-	// Initialize Map
+
+// Initialize Map but hidden until user submits form
+$("#map-container").hide();
+
+L.mapbox.accessToken = 'pk.eyJ1Ijoic3VzYW5jb2RlcyIsImEiOiJhMmIyNGY3ODljOWE5ODhmYzFhYWE4YzM3YzAwZjg5ZiJ9.fyRv1wgTMRJuH-v-orHx6w';
+var mapLeaflet = L.mapbox.map('map-leaflet', 'susancodes.1e9ac8a5')
+  .setView([37.8, -96], 4)
+
+
+
+// Style the marker icon
+var myIcon = L.icon({
+	iconUrl: '/static/img/airplane-icon.png',
+	iconSize: [38, 95],
+	iconAnchor: [22, 94],
+	popupAnchor: [-3, -76],
+});
+
+mapLeaflet.scrollWheelZoom.disable();
+
+
+
+function getFareResults(evt){
+	showLoadingMessage();
+	setTimeout(emptyFlashMessage, 3000);
 
 	// preventing form submission
 	evt.preventDefault();
 	console.log("prevented default");
 
-	L.mapbox.accessToken = 'pk.eyJ1Ijoic3VzYW5jb2RlcyIsImEiOiJhMmIyNGY3ODljOWE5ODhmYzFhYWE4YzM3YzAwZjg5ZiJ9.fyRv1wgTMRJuH-v-orHx6w';
-	var mapLeaflet = L.mapbox.map('map-leaflet', 'susancodes.1e9ac8a5')
-	  .setView([37.8, -96], 4)
-
-
-
-	// Style the marker icon
-	var myIcon = L.icon({
-		iconUrl: '/static/img/airplane-icon.png',
-		iconSize: [38, 95],
-		iconAnchor: [22, 94],
-		popupAnchor: [-3, -76],
-	});
-
-
-	mapLeaflet.scrollWheelZoom.disable();
-	getFareResults(mapLeaflet)
-}
-
-function getFareResults(mapLeaflet){
 	// GETTING FARE RESULTS WITH AJAX
+	// $(".map").style.visibility = "visible";
 
 	// sending GET request to get form values
 	var url = "/airfaresearch?origin=" + $("#airportcodes").val() + 
@@ -36,26 +40,25 @@ function getFareResults(mapLeaflet){
 				"&max-budget=" + $("#max-budget-field").val();
 	// console.log(url)
 
-	
-	// mapLeaflet.remove();
 
-	marker_list = [];
 
 	// Making an ajax call to get the API response
-	
 	$.get(url, function (data){
+		console.log(data.data);
 		var fareResults = data.results;
 		console.log(fareResults);
 		console.log(url);
-		processFareResults(fareResults, mapLeaflet);
+		processFareResults(fareResults, mapLeaflet);			
+		})
 
-	});
-}
+	}
 
 
 function processFareResults(fareResults, mapLeaflet){
 	// getting all the different destination objects from results
-	
+	$("#map-container").show();
+	mapLeaflet.invalidateSize();
+
 	for (var i=0; i < fareResults.length; i++) {
 
 		var destination = fareResults[i];
@@ -75,7 +78,6 @@ function processFareResults(fareResults, mapLeaflet){
 			var lat = parseFloat(destination.coords.latitude);
 			var lon = parseFloat(destination.coords.longitude);
 			var marker = L.marker([lat,lon]).addTo(mapLeaflet);
-			marker_list.push(marker)
 
 
 			// getting destination info
@@ -155,9 +157,9 @@ function processFareResults(fareResults, mapLeaflet){
 }
 
 
-$('#faresearchform').on('submit', initializeMap);
+// $('#faresearchform').on('submit', getFareResults);
 
-
+$('#faresearchform').on('submit', searchCampsites);
 
 
 
@@ -183,13 +185,47 @@ $("#airportcodes").autocomplete({
 // SHOW ERROR MESSAGE FOR NO RESULTS
 
 function showErrorMessage() {
-	$("#flash-message").html("You're too broke to fly. Consider a road trip.")
+	$("#flash-message").html("<br>You're too broke to fly. Consider a road trip.<br>");
 }
 
-$(document).ajaxError(function(){
-	debugger;
-	showErrorMessage;
-})
+function showLoadingMessage() {
+	$("#flash-message").html("<br>Your BFF (budget flight finder) is hard at work. One moment please...</br>");
+}
+
+function emptyFlashMessage() {
+	$("#flash-message").html("");
+}
+
+// $(document).ajaxError(function(){
+// 	showErrorMessage();
+// })
+
+
+function searchCampsites(evt) {
+
+	evt.preventDefault();
+	console.log("prevented default");
+
+	$("#map-container").show();
+	mapLeaflet.invalidateSize();
+
+
+	var url = "/campsitesearch?origin=" + $("#airportcodes").val()
+
+	$.get(url, function (data){
+		debugger;
+		console.log(data.data);
+		var campsiteResults = data.data;
+		for (var i=0; i < campsiteResults.length; i++) {
+			var lat = parseFloat(campsiteResults[i].latitude);
+			var lon = parseFloat(campsiteResults[i].longitude);
+			var marker = L.marker([lat,lon]).addTo(mapLeaflet);
+			console.log(lat, lon)
+		}
+	})
+	
+}
+
 
 
 

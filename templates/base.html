@@ -36,16 +36,8 @@
 
 	<body>
 
-	<!-- THIS IS WHERE FLASH MESSAGES GO -->	
 	<div class="container-fluid">
-		<ul>
-		    {% for message in get_flashed_messages() %}
-		        <li>{{ message }}</li>
-		    {% endfor %}
-		</ul>
 
-		<div id="flash-message">
-		</div>
 
 
 	<!-- THIS IS THE MAIN USER FORM -->	  
@@ -55,16 +47,16 @@
 			  	<input id="airportcodes" name="origin" placeholder="Origin Airport" required>
 			<br>
 			  <label>Earliest Departure Date:</label>
-			  	<input type="date" name="earliest-departure-date" id="early-depart-field" required>
+			  	<input type="date" name="earliest-departure-date" id="early-depart-field">
 			<br>
 			  <label>Latest Departure Date:</label>
-			  	<input type="date" name="latest-departure-date" id="late-depart-field" required>
+			  	<input type="date" name="latest-departure-date" id="late-depart-field">
 			<br>
 			  <label>Length of Travel (in days):</label>
-			  	<input type="text" name="length-of-stay" id="length-of-stay-field" placeholder="3" required>
+			  	<input type="text" name="length-of-stay" id="length-of-stay-field" placeholder="3">
 			<br>
 			  <label>Max Budget ($):</label>
-			  	<input type="text" name="max-budget" id="max-budget-field" placeholder="200" required>
+			  	<input type="text" name="max-budget" id="max-budget-field" placeholder="200">
 			<br>
 			 	<input type="submit" value="Let's Go!">
 			</form>
@@ -72,6 +64,9 @@
 	</div>
 
 <br>
+	<!-- THIS IS WHERE FLASH MESSAGES GO -->	
+		<div id="flash-message">
+		</div>
 <br>
 	<!-- TESTING MAP STUFF -->
 	<div id='map-container'>
