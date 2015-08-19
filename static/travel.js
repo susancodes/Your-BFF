@@ -7,6 +7,12 @@ L.mapbox.accessToken = 'pk.eyJ1Ijoic3VzYW5jb2RlcyIsImEiOiJhMmIyNGY3ODljOWE5ODhmY
 var mapLeaflet = L.mapbox.map('map-leaflet', 'susancodes.1e9ac8a5')
   .setView([37.8, -96], 4)
 
+var layerGroup = L.layerGroup().addTo(mapLeaflet);
+
+var markerLayer = L.mapbox.featureLayer().addTo(mapLeaflet)
+
+
+
 
 // Style the marker icon
 var myIcon = L.icon({
@@ -23,7 +29,7 @@ mapLeaflet.scrollWheelZoom.disable();
 function getFareResults(evt){
 	showLoadingMessage();
 	setTimeout(emptyFlashMessage, 3000);
-	debugger;
+
 	// preventing form submission
 	evt.preventDefault();
 	console.log("prevented default");
@@ -38,8 +44,8 @@ function getFareResults(evt){
 	// console.log(url)
 
 
-	// Making an ajax call to get the API response in PLAIN JSON
-	// THIS IS WORKING. DO NOT ERASE *****************************
+	// // Making an ajax call to get the API response in PLAIN JSON
+	// // THIS IS WORKING. DO NOT ERASE *****************************
 	// $.get(url, function (data) {
 	// 	var fareResults = data.results;
 	// 	console.log(fareResults);
@@ -51,10 +57,20 @@ function getFareResults(evt){
 	// THIS IS CALLING GEOJSON - IT WORKS!!! DO NOT ERASE
 	$.get(url, function (data) {
 		var geojsonFeature = JSON.parse(data);
+		console.log("geojsonFeature");
 		console.log(geojsonFeature);
-		
-		var markerLayer = L.geoJson().addTo(mapLeaflet);
-		markerLayer.addData(geojsonFeature);
+		debugger;
+
+		console.log("TRYING TO GET FARES OBJECT");
+		console.log(geojsonFeature.features[0].properties.fares)
+
+		layerGroup.clearLayers();
+
+		var markerLayer = L.geoJson(geojsonFeature, {
+			onEachFeature: onEachFeature
+		}).addTo(layerGroup)
+
+
 		$("#map-container").show();
 		mapLeaflet.invalidateSize();
 	})	
@@ -64,8 +80,28 @@ function getFareResults(evt){
 
 
 
+function onEachFeature(feature, layer) {
+
+	var popupContent = (
+		'<div class="popup-content">' +
+		'<p style="font-size: 20px"><font color="#3399ff"><b>' + feature.properties.city + '</b></p>' +
+		'<p>(Airport: ' + feature.properties.id + ')</p></font>' +
+		'<div id="curve_chart"></div>' +
+		'</div>'
+		);
+
+	if (feature.properties) {
+		layer.bindPopup(popupContent);
+	}
+}
+
+
+
+
 function processFareResults(fareResults, mapLeaflet){
 	// getting all the different destination objects from results
+	$("#map-container").show();
+	mapLeaflet.invalidateSize();
 
 	for (var i=0; i < fareResults.length; i++) {
 
@@ -138,13 +174,14 @@ function processFareResults(fareResults, mapLeaflet){
 				'<p><b>Lowest NonStop Fare: </b>$' + parseInt(lowestNonStopFare) + '</p>' +
 				'<p>Departure Date: ' + lowestNonStopFareDep.slice(0,10) + '</p>' +
 				'<p>Return Date: ' + lowestNonStopFareRet.slice(0,10) + '</p></div>' +
-				// '<div id="curve_chart"></div>' +
+				'<div id="curve_chart"></div>' +
 				'</div>'
 				);
 
 			}
 
 			marker.bindPopup(popupContent);
+			drawChart()
 			
 			// create a line chart here about the different dates of travel
 
@@ -161,6 +198,7 @@ function processFareResults(fareResults, mapLeaflet){
 				google.setOnLoadCallback(drawChart);
 				chart.draw(data, options);	
 		}
+
 	}
 }
 
