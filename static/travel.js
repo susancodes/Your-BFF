@@ -23,14 +23,14 @@ mapLeaflet.scrollWheelZoom.disable();
 function getFareResults(evt){
 	showLoadingMessage();
 	setTimeout(emptyFlashMessage, 3000);
-
+	debugger;
 	// preventing form submission
 	evt.preventDefault();
 	console.log("prevented default");
 
 
 	// sending GET request to get form values
-	var url = "/airfaresearch?origin=" + $("#airportcodes").val() + 
+	var url = "/airfaresearch.json?origin=" + $("#airportcodes").val() + 
 				"&earliest-departure-date=" + $("#early-depart-field").val() +
 				"&latest-departure-date=" + $("#late-depart-field").val() +
 				"&length-of-stay=" + $("#length-of-stay-field").val() +
@@ -38,23 +38,34 @@ function getFareResults(evt){
 	// console.log(url)
 
 
+	// Making an ajax call to get the API response in PLAIN JSON
+	// THIS IS WORKING. DO NOT ERASE *****************************
+	// $.get(url, function (data) {
+	// 	var fareResults = data.results;
+	// 	console.log(fareResults);
+	// 	processFareResults(fareResults, mapLeaflet);
+	// })
 
-	// Making an ajax call to get the API response
-	$.get(url, function (data){
 
-		console.log(data.data);
-		var fareResults = data.results;
 
-		processFareResults(fareResults, mapLeaflet);			
-		})
+	// THIS IS CALLING GEOJSON - IT WORKS!!! DO NOT ERASE
+	$.get(url, function (data) {
+		var geojsonFeature = JSON.parse(data);
+		console.log(geojsonFeature);
+		
+		var markerLayer = L.geoJson().addTo(mapLeaflet);
+		markerLayer.addData(geojsonFeature);
+		$("#map-container").show();
+		mapLeaflet.invalidateSize();
+	})	
 
-	}
+
+}
+
 
 
 function processFareResults(fareResults, mapLeaflet){
 	// getting all the different destination objects from results
-	$("#map-container").show();
-	mapLeaflet.invalidateSize();
 
 	for (var i=0; i < fareResults.length; i++) {
 
@@ -154,9 +165,9 @@ function processFareResults(fareResults, mapLeaflet){
 }
 
 
-// $('#faresearchform').on('submit', getFareResults);
+$('#faresearchform').on('submit', getFareResults);
 
-$('#faresearchform').on('submit', searchCampsites);
+// $('#faresearchform').on('submit', searchCampsites);
 
 
 

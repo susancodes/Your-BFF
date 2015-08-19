@@ -6,12 +6,37 @@ import requests
 import json
 import datetime
 import pprint
-
-from xml.etree import ElementTree
+import geojson
 
 app = Flask(__name__)
 
 app.secret_key = "Susan Secret Key"
+
+
+class FlightDestinMarker(object):
+	def __init__(self, lat, lon, airport_code, city, fares):
+		self.id = airport_code
+		self.lat = lat
+		self.lon = lon
+		self.city = city
+		self.fares = fares
+
+	@property 
+	def __geo_interface__(self):
+		return {'type': 'Feature', 
+				'geometry': {
+					'type': 'Point',
+					'coordinates': [self.lat, self.lon]
+				},
+				'properties': {
+					'marker-color': '#fc4353',
+					'marker-size': 'small',
+					'marker-symbol': 'airport',
+					'id': self.id,
+					'city': self.city,
+					'fares': self.fares
+				} 
+		}
 
 
 
@@ -48,7 +73,7 @@ def autocomplete():
 
 
 
-@app.route("/airfaresearch")
+@app.route("/airfaresearch.json")
 def airfare_search():
 	"""Using Sabre API request with Bridge, returning fares info."""
 
@@ -64,9 +89,9 @@ def airfare_search():
 	"X-Originating-Ip": "50.197.129.150"}
 
 	base_url = "http://bridge2.sabre.cometari.com/shop/flights/fares?"
-	# param_url = "origin=SFO&earliestdeparturedate=2015-09-01&latestdeparturedate=2015-09-03&lengthofstay=3&maxfare=200&pointofsalecountry=US&ac2lonlat=1" 
-	param_url = "origin=%s&earliestdeparturedate=%s&latestdeparturedate=%s&lengthofstay=%s&maxfare=%s&pointofsalecountry=US&ac2lonlat=1" % (
-		origin, earliest_departure, latest_departure, length_of_stay, max_budget)
+	param_url = "origin=SFO&earliestdeparturedate=2015-09-01&latestdeparturedate=2015-09-03&lengthofstay=3&maxfare=200&pointofsalecountry=US&ac2lonlat=1" 
+	# param_url = "origin=%s&earliestdeparturedate=%s&latestdeparturedate=%s&lengthofstay=%s&maxfare=%s&pointofsalecountry=US&ac2lonlat=1" % (
+	# 	origin, earliest_departure, latest_departure, length_of_stay, max_budget)
 	
 	# putting together the url to request to Sabre's API
 	final_url = base_url + param_url
@@ -80,9 +105,33 @@ def airfare_search():
 
 	pprint.pprint(response_text)
 
+	fare_list = []
 
-	return jsonify(results=response_text)
+	for item in response_text:
+		airport_code = item["id"]
+		city = item["city"]
+		lat = float(item["coords"]["latitude"])
+		lon = float(item["coords"]["longitude"])
+		fares = item["fares"]
+		# print airport_code, city, lat, lon, fares
+
+		one_result = FlightDestinMarker(lon, lat, airport_code, city, fares)
+
+		fare_list.append(one_result)
+
 	
+
+	marker_collection = geojson.FeatureCollection(fare_list)
+	print marker_collection
+	
+
+	# import pdb; pdb.set_trace()
+	marker_geojson = geojson.dumps(marker_collection, sort_keys=True)
+
+	return marker_geojson
+
+	# # THIS WILL RETURN THE PLAIN JSON THAT WORKS
+	# return jsonify(results=response_text) 
 
 @app.route("/campsitesearch")
 def campsite_search():
@@ -151,11 +200,11 @@ def campsite_search():
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
     # that we invoke the DebugToolbarExtension
-    # app.debug = True
+    app.debug = True
 
     connect_to_db(app)
 
     # Use the DebugToolbar
-    # DebugToolbarExtension(app)
+    DebugToolbarExtension(app)
 
     app.run()
