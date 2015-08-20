@@ -125,9 +125,14 @@ def airfare_search():
 		fares = item["fares"]
 		# print airport_code, city, lat, lon, fares
 
-		one_result = FlightDestinMarker(lon, lat, airport_code, city, fares)
+		print "LOWEST FARE:", fares[0]["lowestFare"]
 
-		fare_list.append(one_result)
+		if fares[0]["lowestFare"] == 0:
+			continue
+		else:
+			one_result = FlightDestinMarker(lon, lat, airport_code, city, fares)
+
+			fare_list.append(one_result)
 
 	
 
@@ -183,27 +188,57 @@ def campsite_search():
 	# building my dictionary to pass as JSON
 	for item in query_lat_lon:
 		name = item.name
-		latitude = item.latitude
-		longitude = item.longitude
+		lat = item.latitude
+		lon = item.longitude
 		phone = item.phone
 		dates = item.dates
 		comments = item.comments
 		campsites = item.campsites
-		campsite_info = {"name": name,
-						"latitude": latitude, 
-						"longitude": longitude, 
-						"phone": phone, 
-						"dates": dates, 
-						"comments": comments, 
-						"campsites": campsites}
+
+		campsite_info = CampsiteMarker(name, lat, lon, phone, dates, comments, campsites)
+
 		campsite_list.append(campsite_info)
 
-	print "first: ", length_first
-	print "second: ", length
 
-	print campsite_list
+	marker_collection = geojson.FeatureCollection(campsite_list)
+	print marker_collection
+	
 
-	return jsonify(data=campsite_list)
+	# import pdb; pdb.set_trace()
+	marker_geojson = geojson.dumps(marker_collection, sort_keys=True)
+
+	return marker_geojson
+
+
+
+class CampsiteMarker(object):
+	def __init__(self, name, lon, lat, phone, dates, comments, campsites):
+		self.name = name
+		self.lat = lat
+		self.lon = lon
+		self.phone = phone
+		self.dates = dates
+		self.comments = comments
+		self.campsites = campsites
+
+	@property 
+	def __geo_interface__(self):
+		return {'type': 'Feature', 
+				'geometry': {
+					'type': 'Point',
+					'coordinates': [self.lat, self.lon]
+				},
+				'properties': {
+					'marker-color': '#fc4353',
+					'marker-size': 'small',
+					'marker-symbol': 'airport',
+					'name': self.name,
+					'phone': self.phone,
+					'comments': self.comments,
+					'campsites': self.campsites
+				} 
+		}
+
 
 
 
