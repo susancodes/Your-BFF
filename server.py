@@ -110,8 +110,18 @@ def airfare_search():
 	for item in response_text:
 		airport_code = item["id"]
 		city = item["city"]
-		lat = float(item["coords"]["latitude"])
-		lon = float(item["coords"]["longitude"])
+		check_type = type(item["coords"]["latitude"])
+		if check_type == type(u'-85.736389000000003'):
+			lat = float(item["coords"]["latitude"])
+		else: 
+			continue
+
+		check_type = type(item["coords"]["longitude"])
+		if check_type == type(u'-85.736389000000003'):
+			lon = float(item["coords"]["longitude"])
+		else:
+			continue
+
 		fares = item["fares"]
 		# print airport_code, city, lat, lon, fares
 

@@ -1,5 +1,4 @@
 
-
 // Initialize Map but hidden until user submits form
 $("#map-container").hide();
 
@@ -7,10 +6,8 @@ L.mapbox.accessToken = 'pk.eyJ1Ijoic3VzYW5jb2RlcyIsImEiOiJhMmIyNGY3ODljOWE5ODhmY
 var mapLeaflet = L.mapbox.map('map-leaflet', 'susancodes.1e9ac8a5')
   .setView([37.8, -96], 4)
 
+// must create a layer group so that I can wipe out the markers when user changes budget
 var layerGroup = L.layerGroup().addTo(mapLeaflet);
-
-var markerLayer = L.mapbox.featureLayer().addTo(mapLeaflet)
-
 
 
 
@@ -61,146 +58,114 @@ function getFareResults(evt){
 		console.log(geojsonFeature);
 		debugger;
 
-		console.log("TRYING TO GET FARES OBJECT");
-		console.log(geojsonFeature.features[0].properties.fares)
-
 		layerGroup.clearLayers();
 
+		var markers = new L.markerClusterGroup().addTo(layerGroup);
+
 		var markerLayer = L.geoJson(geojsonFeature, {
-			onEachFeature: onEachFeature
-		}).addTo(layerGroup)
+			onEachFeature: 
+			function onEachFeature(feature, layer) {
+				
+				var fare = feature.properties.fares;
+				console.log("fare: " + fare);
 
+				if (isNaN(fare[0].lowestFare) == false) {
+					var lowestFare = fare[0].lowestFare;
+					var lowestFareDep = fare[0].departureDateTime;
+					var lowestFareRet = fare[0].returnDateTime;
+				} else {
+					var lowestFare = "NOT AVAILABLE";
+					var lowestFareDep = "NOT AVAILABLE";
+					var lowestFareRet = "NOT AVAILABLE";
 
+				}
+
+				// // THIS IS GIVING ME PROBLEMS.
+				// if (isNaN(fare[0].lowestNonStopFare) == false) {
+				// 	var lowestNonStopFare = fare[0].lowestNonStopFare;
+				// 	var lowestNonStopFareDep = fare[0].departureDateTime;
+				// 	var lowestNonStopFareRet = fare[0].returnDateTime;	
+				// } else {
+				// 	var lowestNonStopFare = "NOT AVAILABLE" ;
+				// 	var lowestNonStopFareDep = "NOT AVAILABLE";
+				// 	var lowestNonStopFareRet = "NOT AVAILABLE";	
+				// }
+
+				var fareArray = [['Date', 'Fare', 'NonStop Fare'], ];
+
+				for (var f=0; f < fare.length; f++) {
+				
+					var date = fare[f].departureDateTime.slice(0,10);
+					var dateLowFare = parseInt(fare[f].lowestFare);
+					var dateLowNonStopFare = fare[f].lowestNonStopFare;
+
+					fareArray.push([date, dateLowFare, dateLowNonStopFare]);
+
+					// find the lowest fare
+					// see if there's more than one result
+					// if so, go through each day and compare with the lowestfare
+					// if lower than current lowestfare, update it
+					if (isNaN(fare[f].lowestFare) == false){
+						if (10 < fare[f].lowestFare && fare[f].lowestFare < lowestFare) {
+							lowestFare = fare[f].lowestFare;
+							lowestFareDep = fare[f].departureDateTime;
+							lowestFareRet = fare[f].returnDateTime;
+						}
+					}
+
+					// if (isNaN(fare[f].lowestFare) == false){
+					// 	if (10 < fare[f].lowestNonStopFare && fare[f].lowestNonStopFare < lowestNonStopFare) {
+					// 		lowestNonStopFare = fare[f].lowestNonStopFare;
+					// 		lowestNonStopFareDep = fare[f].departureDateTime;
+					// 		lowestNonStopFareRet = fare[f].returnDateTime;
+					// 	}
+					// }
+
+				}
+
+				var popupContent = (
+					'<div class="popup-content">' +
+					'<p style="font-size: 20px"><font color="#3399ff"><b>' + feature.properties.city + '</b></p>' +
+					'<p>(Airport: ' + feature.properties.id + ')</p></font>' +
+					'<div class="lowestfarecontent"><p><b>Lowest Fare: </b>$' + parseInt(lowestFare) + '</p>' +
+					'<p>Departure Date: ' + lowestFareDep.slice(0,10) + '</p>' +
+					'<p>Return Date: ' + lowestFareRet.slice(0,10) + '</p><hr color="#3399ff">' +
+					// '<p><b>Lowest NonStop Fare: </b>$' + parseInt(lowestNonStopFare) + '</p>' +
+					// '<p>Departure Date: ' + lowestNonStopFareDep.slice(0,10) + '</p>' +
+					// '<p>Return Date: ' + lowestNonStopFareRet.slice(0,10) + '</p></div>' +
+					'<div id="curve_chart">' + "CHART HERE" + '</div>' +
+					'</div>'
+					);
+
+				if (feature.properties) {
+					layer.bindPopup(popupContent);
+				}
+
+			}
+		})
+		// adding the marker layer to the cluster group, which is in a group layer on our map
+		markers.addLayer(markerLayer);
+	})
+
+		// When the map shows itself, it must readjust its size
 		$("#map-container").show();
 		mapLeaflet.invalidateSize();
-	})	
-
-
 }
 
 
 
-function onEachFeature(feature, layer) {
+function drawChart(fareArray) {
+	var data = google.visualization.arrayToDataTable(fareArray);
+	var options = {
+		title: 'Fare Calendar',
+		curveType: 'function',
+		legend: {position: 'bottom'}
+	};
 
-	var popupContent = (
-		'<div class="popup-content">' +
-		'<p style="font-size: 20px"><font color="#3399ff"><b>' + feature.properties.city + '</b></p>' +
-		'<p>(Airport: ' + feature.properties.id + ')</p></font>' +
-		'<div id="curve_chart"></div>' +
-		'</div>'
-		);
-
-	if (feature.properties) {
-		layer.bindPopup(popupContent);
-	}
+	var chart = new google.visualization.LineChart($("#curve_chart"));
+	chart.draw(data, options);	
 }
 
-
-
-
-function processFareResults(fareResults, mapLeaflet){
-	// getting all the different destination objects from results
-	$("#map-container").show();
-	mapLeaflet.invalidateSize();
-
-	for (var i=0; i < fareResults.length; i++) {
-
-		var destination = fareResults[i];
-
-		var fare = destination.fares;
-
-		// some sections of the API response don't have any fare info
-		// must hide this info
-		if (fare[0].lowestFare === 0){
-
-			console.log("No fare here.");
-
-		// this else statement will only show results with fares	
-		} else {
-
-			// must convert lon & lat strings to float numbers!
-			var lat = parseFloat(destination.coords.latitude);
-			var lon = parseFloat(destination.coords.longitude);
-			var marker = L.marker([lat,lon]).addTo(mapLeaflet);
-
-
-			// getting destination info
-			var airportcode = destination.id;
-			var city = destination.city;
-			console.log(city, fare);
-
-			var lowestFare = destination.fares[0].lowestFare;
-			var lowestFareDep = destination.fares[0].departureDateTime;
-			var lowestFareRet = destination.fares[0].returnDateTime;
-
-			var lowestNonStopFare = destination.fares[0].lowestNonStopFare;
-			var lowestNonStopFareDep = destination.fares[0].departureDateTime;
-			var lowestNonStopFareRet = destination.fares[0].returnDateTime;	
-
-			var fareArray = [['Date', 'Fare', 'NonStop Fare'], ];			
-
-			// must iterate through the different fare results for each destination
-			for (var f=0; f < fare.length; f++ ) {
-				
-				var date = fare[f].departureDateTime.slice(0,10);
-				var dateLowFare = parseInt(fare[f].lowestFare);
-				var dateLowNonStopFare = fare[f].lowestNonStopFare;
-
-				fareArray.push([date, dateLowFare, dateLowNonStopFare]);
-
-				// find the lowest fare
-				// see if there's more than one result
-				// if so, go through each day and compare with the lowestfare
-				// if lower than current lowestfare, update it
-				if (fare[f].lowestFare < lowestFare) {
-					lowestFare = fare[f].lowestFare;
-					lowestFareDep = fare[f].departureDateTime;
-					lowestFareRet = fare[f].returnDateTime;
-				}
-				if (fare[f].lowestNonStopFare < lowestNonStopFare) {
-					lowestNonStopFare = fare[f].lowestNonStopFare;
-					lowestNonStopFareDep = fare[f].departureDateTime;
-					lowestNonStopFareRet = fare[f].returnDateTime;
-				}
-			}
-
-			popupContent = (
-				'<div class="popup-content">' +
-				'<p style="font-size: 20px"><font color="#3399ff"><b>' + city + '</b></p>' +
-				'<p>(Airport: ' + airportcode + ')</p></font>' +
-				'<div class="lowestfarecontent"><p><b>Lowest Fare: </b>$' + parseInt(lowestFare) + '</p>' +
-				'<p>Departure Date: ' + lowestFareDep.slice(0,10) + '</p>' +
-				'<p>Return Date: ' + lowestFareRet.slice(0,10) + '</p><hr color="#3399ff">' +
-				'<p><b>Lowest NonStop Fare: </b>$' + parseInt(lowestNonStopFare) + '</p>' +
-				'<p>Departure Date: ' + lowestNonStopFareDep.slice(0,10) + '</p>' +
-				'<p>Return Date: ' + lowestNonStopFareRet.slice(0,10) + '</p></div>' +
-				'<div id="curve_chart"></div>' +
-				'</div>'
-				);
-
-			}
-
-			marker.bindPopup(popupContent);
-			drawChart()
-			
-			// create a line chart here about the different dates of travel
-
-			function drawChart() {
-				var data = google.visualization.arrayToDataTable(fareArray);
-				var options = {
-					title: 'Fare Calendar',
-					curveType: 'function',
-					legend: {position: 'bottom'}
-				};
-
-				var chart = new google.visualization.LineChart($("#curve_chart"));
-
-				google.setOnLoadCallback(drawChart);
-				chart.draw(data, options);	
-		}
-
-	}
-}
 
 
 $('#faresearchform').on('submit', getFareResults);
