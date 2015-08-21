@@ -24,6 +24,9 @@ var myIcon = L.icon({
 mapLeaflet.scrollWheelZoom.disable();
 
 
+$('#faresearchform').on('submit', getFareResults);
+
+
 
 function getFareResults(evt){
 	showLoadingMessage();
@@ -149,11 +152,15 @@ function processFareResults(geojsonFeature) {
 	})
 	// adding the marker layer to the cluster group, which is in a group layer on our map
 	markers.addLayer(markerLayer);
-	
+
 	// When the map shows itself, it must readjust its size
 	$("#map-container").show();
 	mapLeaflet.invalidateSize();
 	mapLeaflet.fitBounds(markers.getBounds());
+
+	flightsMapMessage();
+	setTimeout(emptyMapMessage, 7000);
+
 }
 
 
@@ -169,12 +176,6 @@ function drawChart(fareArray) {
 	var chart = new google.visualization.LineChart($("#curve_chart"));
 	chart.draw(data, options);	
 }
-
-
-
-$('#faresearchform').on('submit', getFareResults);
-
-// $('#faresearchform').on('submit', searchCampsites);
 
 
 
@@ -197,19 +198,6 @@ $("#airportcodes").autocomplete({
 })
 });
 
-// SHOW ERROR MESSAGE FOR NO RESULTS
-
-function showErrorMessage() {
-	$("#flash-message").html("<br>Something went wrong. Please refresh the page and try again.<br>");
-}
-
-function showLoadingMessage() {
-	$("#flash-message").html("<br>Your BFF (budget flight finder) is hard at work. One moment please...</br>");
-}
-
-function emptyFlashMessage() {
-	$("#flash-message").html("");
-}
 
 // if any ajax is broke, this message will display
 $(document).ajaxError(function(){
@@ -262,8 +250,45 @@ function searchCampsites() {
 
 	$("#map-container").show();
 	mapLeaflet.invalidateSize();
+	campsiteMapMessage();
+	setTimeout(emptyMapMessage, 7000);
 }
 
+
+// SHOW DIFFERENT MESSAGES BASED ON RESULTS
+
+function showErrorMessage() {
+	$("#flash-message").html("<br>Something went wrong. Please refresh the page and try again.<br>");
+	$("#flash-message").show();
+}
+
+function showLoadingMessage() {
+	$("#flash-message").html("<br>Your BFF (budget flight finder) is hard at work. One moment please...</br>");
+	$("#flash-message").show();
+
+}
+
+function emptyFlashMessage() {
+	$("#flash-message").html("");
+	$("#flash-message").hide();
+}
+
+function flightsMapMessage() {
+	$("#over-map-box").html("Have a safe flight!");
+	$("#over-map-box").show();
+
+}
+
+function campsiteMapMessage() {
+	$("#over-map-box").html("Consider taking a road trip and camping!");
+	$("#over-map-box").show();
+
+}
+
+function emptyMapMessage() {
+	$("#over-map-box").html("");
+	$("#over-map-box").hide();
+}
 
 
 

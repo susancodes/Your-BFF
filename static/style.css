@@ -15,6 +15,17 @@ body {
 	height: 600px;
 }
 
+#over-map-box {
+	position: absolute;
+	background-color: #fff;
+	top: 50px;
+	left: 50px;
+	font-size: 16px;
+	font-family: sans-serif;
+	border: 2px white solid;
+	border-radius: 10px;
+}
+
 
 .lowestfarecontent {
 }

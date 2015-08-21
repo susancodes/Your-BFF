@@ -8,9 +8,14 @@ import datetime
 import pprint
 import geojson
 
+import os
+
+instagram_client_id = os.environ["INSTAGRAM_CLIENT_ID"]
+sabre_access_token = os.environ["SABRE_ACCESS_TOKEN"]
+
 app = Flask(__name__)
 
-app.secret_key = "Susan Secret Key"
+app.secret_key = "CUPCAKES"
 
 
 class FlightDestinMarker(object):
@@ -38,6 +43,34 @@ class FlightDestinMarker(object):
 				} 
 		}
 
+
+class CampsiteMarker(object):
+	def __init__(self, name, lon, lat, phone, dates, comments, campsites):
+		self.name = name
+		self.lat = lat
+		self.lon = lon
+		self.phone = phone
+		self.dates = dates
+		self.comments = comments
+		self.campsites = campsites
+
+	@property 
+	def __geo_interface__(self):
+		return {'type': 'Feature', 
+				'geometry': {
+					'type': 'Point',
+					'coordinates': [self.lat, self.lon]
+				},
+				'properties': {
+					'marker-color': '#fc4353',
+					'marker-size': 'small',
+					'marker-symbol': 'airport',
+					'name': self.name,
+					'phone': self.phone,
+					'comments': self.comments,
+					'campsites': self.campsites
+				} 
+		}
 
 
 
@@ -85,8 +118,7 @@ def airfare_search():
 	length_of_stay = request.args.get('length-of-stay')
 	max_budget = request.args.get('max-budget')
 
-	headers = {"Authorization": "Bearer T1RLAQL/QfI2vTvwGfizaSk3pXYlMh5wFRA9+OLqQ/h/YpxelgqOaRpqAACgtWo5h/kal3de+BbK0myvIVkRW3Wrf4lMaGiqZUHe4EzdEMYR/sicpLqBE/bjRUcdTwm3RhBVTUdWPEmwboT+LgPLZlEqILTUTNV7TC4B8/IuUvh6Apgjf0UWZVrxJr/lvVA00gD/+Zu7AGt/NljQg+TdaXX3HxWFbO9MaxJG9+pxfaifdUEATwb+i2I5kRUmrlwgDUUnz8hkc1lIYtN+xg**",
-	"X-Originating-Ip": "50.197.129.150"}
+	headers = {"Authorization": sabre_access_token}
 
 	base_url = "http://bridge2.sabre.cometari.com/shop/flights/fares?"
 	# param_url = "origin=SFO&earliestdeparturedate=2015-09-01&latestdeparturedate=2015-09-03&lengthofstay=3&maxfare=200&pointofsalecountry=US&ac2lonlat=1" 
@@ -209,35 +241,11 @@ def campsite_search():
 	return marker_geojson
 
 
+@app.route("/instagram")
+def get_instagram(): 
 
-class CampsiteMarker(object):
-	def __init__(self, name, lon, lat, phone, dates, comments, campsites):
-		self.name = name
-		self.lat = lat
-		self.lon = lon
-		self.phone = phone
-		self.dates = dates
-		self.comments = comments
-		self.campsites = campsites
-
-	@property 
-	def __geo_interface__(self):
-		return {'type': 'Feature', 
-				'geometry': {
-					'type': 'Point',
-					'coordinates': [self.lat, self.lon]
-				},
-				'properties': {
-					'marker-color': '#fc4353',
-					'marker-size': 'small',
-					'marker-symbol': 'airport',
-					'name': self.name,
-					'phone': self.phone,
-					'comments': self.comments,
-					'campsites': self.campsites
-				} 
-		}
-
+	origin = request.args.get('origin')
+	origin = origin[1:4]
 
 
 
