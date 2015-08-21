@@ -9,6 +9,8 @@ var mapLeaflet = L.mapbox.map('map-leaflet', 'susancodes.1e9ac8a5')
 // must create a layer group so that I can wipe out the markers when user changes budget
 var layerGroup = L.layerGroup().addTo(mapLeaflet);
 
+var featureGroup = L.featureGroup(layerGroup);
+
 
 
 // Style the marker icon
@@ -152,7 +154,7 @@ function processFareResults(geojsonFeature) {
 	})
 	// adding the marker layer to the cluster group, which is in a group layer on our map
 	markers.addLayer(markerLayer);
-
+	mapLeaflet.fitBounds(markers.getBounds());
 }
 
 
@@ -256,8 +258,7 @@ function searchCampsites() {
 		})
 
 		markers.addLayer(markerLayer);
-		allLayers = getLayers(layerGroup);
-		mapLeaflet.fitBounds(allLayers.getBounds());
+		mapLeaflet.fitBounds(markers.getBounds());
 	})
 
 	$("#map-container").show();
