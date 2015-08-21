@@ -160,18 +160,17 @@ def campsite_search():
 
 	print origin_object
 
-	# chose 0.8 because 1.0 degrees is about 69 miles
-	# I want it around 50 miles radius 
+	# 1.0 degrees is about 69 miles
 
 	lat = origin_object.latitude
-	lower_lat = lat - 0.8
-	higher_lat = lat + 0.8
+	lower_lat = lat - 1
+	higher_lat = lat + 1
 
 	print lat, lower_lat, higher_lat
 
 	lon = origin_object.longitude
-	lower_lon = lon - 0.8
-	higher_lon = lon + 0.8
+	lower_lon = lon - 1
+	higher_lon = lon + 1
 
 	print lon, lower_lon, higher_lon
 

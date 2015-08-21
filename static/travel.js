@@ -63,11 +63,6 @@ function getFareResults(evt){
 			processFareResults(geojsonFeature);
 		}
 
-
-		// When the map shows itself, it must readjust its size
-		$("#map-container").show();
-		mapLeaflet.invalidateSize();
-
 	})
 }
 
@@ -154,6 +149,10 @@ function processFareResults(geojsonFeature) {
 	})
 	// adding the marker layer to the cluster group, which is in a group layer on our map
 	markers.addLayer(markerLayer);
+	
+	// When the map shows itself, it must readjust its size
+	$("#map-container").show();
+	mapLeaflet.invalidateSize();
 	mapLeaflet.fitBounds(markers.getBounds());
 }
 
