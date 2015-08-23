@@ -2,6 +2,9 @@
 // Initialize Map but hidden until user submits form
 $("#map-container").hide();
 
+google.load('visualization', '1.1', {packages: ['line']});
+google.setOnLoadCallback(initialize);
+
 L.mapbox.accessToken = 'pk.eyJ1Ijoic3VzYW5jb2RlcyIsImEiOiJhMmIyNGY3ODljOWE5ODhmYzFhYWE4YzM3YzAwZjg5ZiJ9.fyRv1wgTMRJuH-v-orHx6w';
 var mapLeaflet = L.mapbox.map('map-leaflet', 'susancodes.1e9ac8a5')
   .setView([37.8, -96], 4)
@@ -98,7 +101,7 @@ function processFareResults(geojsonFeature) {
 			// 	var lowestNonStopFareRet = "NOT AVAILABLE";	
 			// }
 
-			var fareArray = [['Date', 'Fare', 'NonStop Fare'], ];
+			var fareArray = [];
 
 			for (var f=0; f < fare.length; f++) {
 			
@@ -132,7 +135,7 @@ function processFareResults(geojsonFeature) {
 
 			var popupContent = (
 				'<div class="popup-content">' +
-				'<p style="font-size: 20px"><font color="#3399ff"><b>' + feature.properties.city + '</b></p>' +
+				'<p id="city-name" style="font-size: 20px"><font color="#3399ff"><b>' + feature.properties.city + '</b></p>' +
 				'<p>(Airport: ' + feature.properties.id + ')</p></font>' +
 				'<div class="lowestfarecontent"><p><b>Lowest Fare: </b>$' + parseInt(lowestFare) + '</p>' +
 				'<p>Departure Date: ' + lowestFareDep.slice(0,10) + '</p>' +
@@ -140,12 +143,16 @@ function processFareResults(geojsonFeature) {
 				// '<p><b>Lowest NonStop Fare: </b>$' + parseInt(lowestNonStopFare) + '</p>' +
 				// '<p>Departure Date: ' + lowestNonStopFareDep.slice(0,10) + '</p>' +
 				// '<p>Return Date: ' + lowestNonStopFareRet.slice(0,10) + '</p></div>' +
-				'<div id="curve_chart">' + "CHART HERE" + '</div>' +
+				'<div id="fare-array">' + fareArray + '</div>' +
+				// '<div id="curve-chart"></div>' +
+				'<div id="instagram-box"><button class="instagram-btn">Instagram</button></div>' + 
+				'<button class="chart-btn">Chart</button>' + 
 				'</div>'
 				);
 
 			if (feature.properties) {
 				layer.bindPopup(popupContent);
+				// getInstagramPics();
 			}
 
 		}
@@ -163,18 +170,60 @@ function processFareResults(geojsonFeature) {
 
 }
 
+$('.map').on('click', '.instagram-btn', function() {
+    alert("I'm doing instagram things!");
+    var city = $("#city-name").text();
+    console.log(city);
+    // getInstagramPics(city);
+
+});
 
 
-function drawChart(fareArray) {
-	var data = google.visualization.arrayToDataTable(fareArray);
+function initialize() {
+	$(".map").on('click', '.chart-btn', function () {
+	    var fareList = $("#fare-array").html();
+	    console.log(fareList);
+		drawChart(fareList);
+	})
+}
+
+function drawChart(fareList) {
+	var fareList = fareList;
+    fareList = fareList.split(",");
+    fareArray = [];
+    fareArrayCounter = 0;
+
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Date');
+	data.addColumn('number', 'Lowest Fare');
+	data.addColumn('number', 'Lowest NonStop Fare');
+    for (var c=0; c < fareList.length; c++) {
+	    console.log(fareList);
+	    console.log(fareList[0]);
+	    console.log(fareList[1]);
+	    console.log(fareList[2]);
+	    var date1 = fareList.shift();
+	    var fare1 = parseInt(fareList.shift());
+	    var nonstopfare1 = parseInt(fareList.shift());
+
+	    data.addRow([date1, fare1, nonstopfare1]);
+	}
+
 	var options = {
 		title: 'Fare Calendar',
 		curveType: 'function',
+		height: 500,
+		width: 500,
 		legend: {position: 'bottom'}
-	};
+	};	
 
-	var chart = new google.visualization.LineChart($("#curve_chart"));
+	console.log(data);
+	console.log(options);
+
+	var chart = new google.charts.Line(document.getElementById('curve-chart'));
 	chart.draw(data, options);	
+	console.log(chart);
+
 }
 
 
@@ -200,9 +249,9 @@ $("#airportcodes").autocomplete({
 
 
 // if any ajax is broke, this message will display
-$(document).ajaxError(function(){
-	searchCampsites();
-})
+// $(document).ajaxError(function(){
+// 	searchCampsites();
+// })
 
 
 function searchCampsites() {
@@ -228,7 +277,7 @@ function searchCampsites() {
 
 				var popupContent = (
 					'<div class="popup-content">' +
-					'<p style="font-size: 20px"><font color="#3399ff"><b>' + feature.properties.name + '</b></p>' +
+					'<p id="city-name" style="font-size: 20px"><font color="#3399ff"><b>' + feature.properties.name + '</b></p>' +
 					'<p>(Phone: ' + feature.properties.phone + ')</p></font>' +
 					'<div><p>Dates Open: ' + feature.properties.dates + '</p>' +
 					'<p>Notes: ' + feature.properties.comments + '</p>' +
@@ -238,6 +287,7 @@ function searchCampsites() {
 
 				if (feature.properties) {
 					layer.bindPopup(popupContent);
+				
 				}
 
 			}
@@ -253,6 +303,23 @@ function searchCampsites() {
 	campsiteMapMessage();
 	setTimeout(emptyMapMessage, 7000);
 }
+
+
+// INSTAGRAM AJAX
+function getInstagramPics(markerCity) {
+	// debugger;
+	console.log("getting instagram stuff")
+	var city = markerCity
+	console.log("city: " + city);
+	var url = "/instagram.json?city=" + city
+	$.get(url, function(data) {
+		var photos = JSON.parse(data)
+		console.log(photos);
+	})
+}
+
+
+// marker.on("click", getInstagramPics())
 
 
 // SHOW DIFFERENT MESSAGES BASED ON RESULTS
@@ -289,6 +356,8 @@ function emptyMapMessage() {
 	$("#over-map-box").html("");
 	$("#over-map-box").hide();
 }
+
+
 
 
 

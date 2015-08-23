@@ -241,11 +241,48 @@ def campsite_search():
 	return marker_geojson
 
 
-@app.route("/instagram")
+@app.route("/instagram.json")
 def get_instagram(): 
 
-	origin = request.args.get('origin')
-	origin = origin[1:4]
+	# origin = request.args.get('origin')
+	# origin = origin[1:4]
+
+	city = request.args.get('city')
+	city = city.replace(" ", "")
+	print "DID THE CITY STRIP %20?", city
+
+	instagram_url = "https://api.instagram.com/v1/tags/%s/media/recent?client_id=%s" % (city, instagram_client_id)
+
+	# calling the API
+	insta_response = requests.get(instagram_url)
+
+	# converting response to json
+	insta_response_text = insta_response.json()
+
+	pprint.pprint(insta_response_text)
+
+
+	results = insta_response_text["data"]
+
+	photo_list = []
+
+	for item in results:
+		print "I'M HERE"
+		text = item["caption"]["text"]
+		low_res_img = item["images"]["low_resolution"]["url"]
+		link = item["link"]
+
+		one_photo = {"img_url": low_res_img,
+					"instagram_link": link,
+					"caption": text}
+
+		photo_list.append(one_photo)
+
+	print "I'M INSTAGRAM API ENDPOINT URL: ", instagram_url
+
+	return json.dumps(photo_list)
+
+
 
 
 
