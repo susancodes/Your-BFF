@@ -2,7 +2,7 @@
 // Initialize Map but hidden until user submits form
 $("#map-container").hide();
 
-google.load('visualization', '1.1', {packages: ['line']});
+google.load('visualization', '1', {packages: ['corechart']});
 google.setOnLoadCallback(initialize);
 
 L.mapbox.accessToken = 'pk.eyJ1Ijoic3VzYW5jb2RlcyIsImEiOiJhMmIyNGY3ODljOWE5ODhmYzFhYWE4YzM3YzAwZjg5ZiJ9.fyRv1wgTMRJuH-v-orHx6w';
@@ -210,17 +210,27 @@ function drawChart(fareList) {
 	}
 
 	var options = {
-		title: 'Fare Calendar',
+		title: 'Fare Calendar for ' + $("#city-name").text(),
+		titleTextStyles: {size: 16, color: '#3399ff'},
 		curveType: 'function',
 		height: 500,
 		width: 500,
-		legend: {position: 'bottom'}
+		legend: {position: 'bottom'},
+		vAxis: {format: 'currency', title: 'Price', fontSize: 16},
+		hAxis: {title: 'Available Flight Dates', titleTextStyles}
 	};	
+
+	var formatter = new google.visualization.NumberFormat({
+		prefix: '$',
+	});
+
+	formatter.format(data, 1);
+	formatter.format(data, 2);
 
 	console.log(data);
 	console.log(options);
 
-	var chart = new google.charts.Line(document.getElementById('curve-chart'));
+	var chart = new google.visualization.LineChart(document.getElementById('curve-chart'));
 	chart.draw(data, options);	
 	console.log(chart);
 
@@ -248,10 +258,10 @@ $("#airportcodes").autocomplete({
 });
 
 
-// if any ajax is broke, this message will display
-// $(document).ajaxError(function(){
-// 	searchCampsites();
-// })
+if any ajax is broken, this message will display
+$(document).ajaxError(function(){
+	showErrorMessage();
+})
 
 
 function searchCampsites() {
