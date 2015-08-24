@@ -2,18 +2,15 @@
 // Initialize Map but hidden until user submits form
 $("#map-container").hide();
 
-google.load('visualization', '1', {packages: ['corechart']});
-google.setOnLoadCallback(initialize);
-
 L.mapbox.accessToken = 'pk.eyJ1Ijoic3VzYW5jb2RlcyIsImEiOiJhMmIyNGY3ODljOWE5ODhmYzFhYWE4YzM3YzAwZjg5ZiJ9.fyRv1wgTMRJuH-v-orHx6w';
-var mapLeaflet = L.mapbox.map('map-leaflet', 'susancodes.1e9ac8a5')
+var mapLeaflet = L.mapbox.map('map-leaflet', 'susancodes.1c1d3854')
   .setView([37.8, -96], 4)
 
 // must create a layer group so that I can wipe out the markers when user changes budget
 var layerGroup = L.layerGroup().addTo(mapLeaflet);
 
+// must declare feature group to set bounds
 var featureGroup = L.featureGroup(layerGroup);
-
 
 
 // Style the marker icon
@@ -27,11 +24,18 @@ var myIcon = L.icon({
 mapLeaflet.scrollWheelZoom.disable();
 
 
-$('#faresearchform').on('submit', getFareResults);
+// must load google charts API package, but it will wait for event listener to draw chart
+google.load('visualization', '1', {packages: ['corechart']});
+google.setOnLoadCallback(initialize);
 
 
+
+
+// ALL WEBAPP FUNCTIONS START HERE
 
 function getFareResults(evt){
+// get flight results
+
 	showLoadingMessage();
 	setTimeout(emptyFlashMessage, 3000);
 
@@ -58,7 +62,7 @@ function getFareResults(evt){
 	// })
 
 
-	// THIS IS CALLING GEOJSON - IT WORKS!!! DO NOT ERASE
+	// calling for geoJSON
 	$.get(url, function (data) {
 		var geojsonFeature = JSON.parse(data);
 		console.log(geojsonFeature);
@@ -74,11 +78,20 @@ function getFareResults(evt){
 
 
 function processFareResults(geojsonFeature) {
+// display flight results on map
+
+	// clears previous data markers, if any
 	layerGroup.clearLayers();
 
+
+	// this makes markers cluster
 	var markers = new L.markerClusterGroup().addTo(layerGroup);
 
 	var markerLayer = L.geoJson(geojsonFeature, {
+
+		pointToLayer: L.mapbox.marker.style,
+    	style: function(feature) { return feature.properties; },
+
 		onEachFeature: 
 		function onEachFeature(feature, layer) {
 			
@@ -89,18 +102,6 @@ function processFareResults(geojsonFeature) {
 			var lowestFareDep = fare[0].departureDateTime;
 			var lowestFareRet = fare[0].returnDateTime;
 			 
-
-			// // THIS IS GIVING ME PROBLEMS.
-			// if (isNaN(fare[0].lowestNonStopFare) == false) {
-			// 	var lowestNonStopFare = fare[0].lowestNonStopFare;
-			// 	var lowestNonStopFareDep = fare[0].departureDateTime;
-			// 	var lowestNonStopFareRet = fare[0].returnDateTime;	
-			// } else {
-			// 	var lowestNonStopFare = "NOT AVAILABLE" ;
-			// 	var lowestNonStopFareDep = "NOT AVAILABLE";
-			// 	var lowestNonStopFareRet = "NOT AVAILABLE";	
-			// }
-
 			var fareArray = [];
 
 			for (var f=0; f < fare.length; f++) {
@@ -123,26 +124,15 @@ function processFareResults(geojsonFeature) {
 					}
 				}
 
-				// if (isNaN(fare[f].lowestFare) == false){
-				// 	if (10 < fare[f].lowestNonStopFare && fare[f].lowestNonStopFare < lowestNonStopFare) {
-				// 		lowestNonStopFare = fare[f].lowestNonStopFare;
-				// 		lowestNonStopFareDep = fare[f].departureDateTime;
-				// 		lowestNonStopFareRet = fare[f].returnDateTime;
-				// 	}
-				// }
-
 			}
 
 			var popupContent = (
 				'<div class="popup-content">' +
-				'<p id="city-name" style="font-size: 20px"><font color="#3399ff"><b>' + feature.properties.city + '</b></p>' +
+				'<p id="city-name" style="font-size: 20px"><font color="#E94E77"><b>' + feature.properties.city + '</b></p>' +
 				'<p>(Airport: ' + feature.properties.id + ')</p></font>' +
 				'<div class="lowestfarecontent"><p><b>Lowest Fare: </b>$' + parseInt(lowestFare) + '</p>' +
 				'<p>Departure Date: ' + lowestFareDep.slice(0,10) + '</p>' +
-				'<p>Return Date: ' + lowestFareRet.slice(0,10) + '</p><hr color="#3399ff">' +
-				// '<p><b>Lowest NonStop Fare: </b>$' + parseInt(lowestNonStopFare) + '</p>' +
-				// '<p>Departure Date: ' + lowestNonStopFareDep.slice(0,10) + '</p>' +
-				// '<p>Return Date: ' + lowestNonStopFareRet.slice(0,10) + '</p></div>' +
+				'<p>Return Date: ' + lowestFareRet.slice(0,10) + '</p><hr color="#E94E77">' +
 				'<div id="fare-array">' + fareArray + '</div>' +
 				// '<div id="curve-chart"></div>' +
 				'<div id="instagram-box"><button class="instagram-btn">Instagram</button></div>' + 
@@ -152,11 +142,11 @@ function processFareResults(geojsonFeature) {
 
 			if (feature.properties) {
 				layer.bindPopup(popupContent);
-				// getInstagramPics();
 			}
 
 		}
 	})
+
 	// adding the marker layer to the cluster group, which is in a group layer on our map
 	markers.addLayer(markerLayer);
 
@@ -165,21 +155,78 @@ function processFareResults(geojsonFeature) {
 	mapLeaflet.invalidateSize();
 	mapLeaflet.fitBounds(markers.getBounds());
 
+	// tells user that they're seeing flight results
 	flightsMapMessage();
 	setTimeout(emptyMapMessage, 7000);
 
 }
 
-$('.map').on('click', '.instagram-btn', function() {
-    alert("I'm doing instagram things!");
-    var city = $("#city-name").text();
-    console.log(city);
-    // getInstagramPics(city);
 
-});
 
+function searchCampsites() {
+// search for campsites when flight results is an empty array
+
+	var url = "/campsitesearch?origin=" + $("#airportcodes").val()
+
+	$.get(url, function (data){
+	
+		var campsiteResults = JSON.parse(data);
+		console.log(campsiteResults);
+
+		layerGroup.clearLayers();
+
+		var markers = new L.markerClusterGroup().addTo(layerGroup);
+
+		var markerLayer = L.geoJson(campsiteResults, {
+
+			pointToLayer: L.mapbox.marker.style,
+    		style: function(feature) { return feature.properties; },
+
+			onEachFeature:
+			function onEachFeature(feature, layer) {
+				console.log(feature);
+
+				var popupContent = (
+					'<div class="popup-content">' +
+					'<p id="city-name" style="font-size: 20px"><font color="#379F7A"><b>' + feature.properties.name + '</b></p>' +
+					'<p>(Phone: ' + feature.properties.phone + ')</p></font>' +
+					'<div><p>Dates Open: ' + feature.properties.dates + '</p>' +
+					'<p>Notes: ' + feature.properties.comments + '</p>' +
+					'<p>Number of Campsites: ' + feature.properties.campsites + '</p></div>' +
+					'</div>'
+					);
+
+				if (feature.properties) {
+					layer.bindPopup(popupContent);
+				
+				}
+
+			}
+
+		})
+
+		markers.addLayer(markerLayer);
+		mapLeaflet.fitBounds(markers.getBounds());
+	})
+
+	// switch map from hidden to show
+	// must invalidate size for map to show up
+	$("#map-container").show();
+	mapLeaflet.invalidateSize();
+
+	// let the user know they're getting campsite results
+	campsiteMapMessage();
+	setTimeout(emptyMapMessage, 7000);
+}
+
+
+
+
+// GOOGLE CHART FUNCTIONS
 
 function initialize() {
+// google charts must load its API when page loads but it will wait for an event handler to draw chart
+
 	$(".map").on('click', '.chart-btn', function () {
 	    var fareList = $("#fare-array").html();
 	    console.log(fareList);
@@ -187,7 +234,10 @@ function initialize() {
 	})
 }
 
+
 function drawChart(fareList) {
+// drawing chart from marker popup info
+
 	var fareList = fareList;
     fareList = fareList.split(",");
     fareArray = [];
@@ -216,8 +266,11 @@ function drawChart(fareList) {
 		height: 500,
 		width: 500,
 		legend: {position: 'bottom'},
-		vAxis: {format: 'currency', title: 'Price', fontSize: 16},
-		hAxis: {title: 'Available Flight Dates', titleTextStyles}
+		series: {0: {color: 'C6E5D9'}, 1: {color: 'D68189'}},
+		lineWidth: 4, 
+		vAxis: {format: 'currency', title: 'Price', titleTextStyles: {fontSize: '16', fontName: 'Arial', fontStyle: 'normal'}},
+		hAxis: {title: 'Available Flight Dates'},
+		titleTextStyles: {fontSize: 16, fontName: 'Arial', fontStyle: 'normal'}
 	};	
 
 	var formatter = new google.visualization.NumberFormat({
@@ -235,6 +288,22 @@ function drawChart(fareList) {
 	console.log(chart);
 
 }
+
+
+
+// INSTAGRAM AJAX
+function getInstagramPics(markerCity) {
+	// debugger;
+	console.log("getting instagram stuff")
+	var city = markerCity
+	console.log("city: " + city);
+	var url = "/instagram.json?city=" + city
+	$.get(url, function(data) {
+		var photos = JSON.parse(data)
+		console.log(photos);
+	})
+}
+
 
 
 
@@ -258,78 +327,30 @@ $("#airportcodes").autocomplete({
 });
 
 
-if any ajax is broken, this message will display
+// EVENT LISTENERS
+
+// when user clicks instagram button
+$('.map').on('click', '.instagram-btn', function() {
+    alert("I'm doing instagram things!");
+    var city = $("#city-name").text();
+    console.log(city);
+    getInstagramPics(city);
+
+});
+
+
+
+// when user submits form
+$('#faresearchform').on('submit', getFareResults);
+
+
+
+// if any ajax is broken, this message will display
 $(document).ajaxError(function(){
-	showErrorMessage();
+	showErrorMessage;
 })
 
 
-function searchCampsites() {
-
-	// evt.preventDefault();
-	// console.log("prevented default");
-
-	var url = "/campsitesearch?origin=" + $("#airportcodes").val()
-
-	$.get(url, function (data){
-	
-		var campsiteResults = JSON.parse(data);
-		console.log(campsiteResults);
-
-		layerGroup.clearLayers();
-
-		var markers = new L.markerClusterGroup().addTo(layerGroup);
-
-		var markerLayer = L.geoJson(campsiteResults, {
-			onEachFeature:
-			function onEachFeature(feature, layer) {
-				console.log(feature);
-
-				var popupContent = (
-					'<div class="popup-content">' +
-					'<p id="city-name" style="font-size: 20px"><font color="#3399ff"><b>' + feature.properties.name + '</b></p>' +
-					'<p>(Phone: ' + feature.properties.phone + ')</p></font>' +
-					'<div><p>Dates Open: ' + feature.properties.dates + '</p>' +
-					'<p>Notes: ' + feature.properties.comments + '</p>' +
-					'<p>Number of Campsites: ' + feature.properties.campsites + '</p></div>' +
-					'</div>'
-					);
-
-				if (feature.properties) {
-					layer.bindPopup(popupContent);
-				
-				}
-
-			}
-
-		})
-
-		markers.addLayer(markerLayer);
-		mapLeaflet.fitBounds(markers.getBounds());
-	})
-
-	$("#map-container").show();
-	mapLeaflet.invalidateSize();
-	campsiteMapMessage();
-	setTimeout(emptyMapMessage, 7000);
-}
-
-
-// INSTAGRAM AJAX
-function getInstagramPics(markerCity) {
-	// debugger;
-	console.log("getting instagram stuff")
-	var city = markerCity
-	console.log("city: " + city);
-	var url = "/instagram.json?city=" + city
-	$.get(url, function(data) {
-		var photos = JSON.parse(data)
-		console.log(photos);
-	})
-}
-
-
-// marker.on("click", getInstagramPics())
 
 
 // SHOW DIFFERENT MESSAGES BASED ON RESULTS

@@ -19,6 +19,8 @@ app.secret_key = "CUPCAKES"
 
 
 class FlightDestinMarker(object):
+	"""	Make a class to convert flight results to geoJSON. """
+
 	def __init__(self, lat, lon, airport_code, city, fares):
 		self.id = airport_code
 		self.lat = lat
@@ -34,8 +36,8 @@ class FlightDestinMarker(object):
 					'coordinates': [self.lat, self.lon]
 				},
 				'properties': {
-					'marker-color': '#fc4353',
-					'marker-size': 'small',
+					'marker-color': '#E94E77',
+					'marker-size': 'medium',
 					'marker-symbol': 'airport',
 					'id': self.id,
 					'city': self.city,
@@ -45,6 +47,8 @@ class FlightDestinMarker(object):
 
 
 class CampsiteMarker(object):
+	""" Make a class to turn campsite results to geoJSON. """
+
 	def __init__(self, name, lon, lat, phone, dates, comments, campsites):
 		self.name = name
 		self.lat = lat
@@ -54,6 +58,7 @@ class CampsiteMarker(object):
 		self.comments = comments
 		self.campsites = campsites
 
+
 	@property 
 	def __geo_interface__(self):
 		return {'type': 'Feature', 
@@ -62,9 +67,9 @@ class CampsiteMarker(object):
 					'coordinates': [self.lat, self.lon]
 				},
 				'properties': {
-					'marker-color': '#fc4353',
-					'marker-size': 'small',
-					'marker-symbol': 'airport',
+					'marker-color': '#379F7A',
+					'marker-size': 'medium',
+					'marker-symbol': 'park',
 					'name': self.name,
 					'phone': self.phone,
 					'comments': self.comments,
@@ -121,9 +126,9 @@ def airfare_search():
 	headers = {"Authorization": sabre_access_token}
 
 	base_url = "http://bridge2.sabre.cometari.com/shop/flights/fares?"
-	# param_url = "origin=SFO&earliestdeparturedate=2015-09-01&latestdeparturedate=2015-09-03&lengthofstay=3&maxfare=200&pointofsalecountry=US&ac2lonlat=1" 
-	param_url = "origin=%s&earliestdeparturedate=%s&latestdeparturedate=%s&lengthofstay=%s&maxfare=%s&pointofsalecountry=US&ac2lonlat=1" % (
-		origin, earliest_departure, latest_departure, length_of_stay, max_budget)
+	param_url = "origin=SFO&earliestdeparturedate=2015-09-01&latestdeparturedate=2015-09-09&lengthofstay=3&maxfare=2000&pointofsalecountry=US&ac2lonlat=1" 
+	# param_url = "origin=%s&earliestdeparturedate=%s&latestdeparturedate=%s&lengthofstay=%s&maxfare=%s&pointofsalecountry=US&ac2lonlat=1" % (
+	# 	origin, earliest_departure, latest_departure, length_of_stay, max_budget)
 	
 	# putting together the url to request to Sabre's API
 	final_url = base_url + param_url
@@ -179,6 +184,7 @@ def airfare_search():
 
 	# # THIS WILL RETURN THE PLAIN JSON THAT WORKS
 	# return jsonify(results=response_text) 
+
 
 @app.route("/campsitesearch")
 def campsite_search():
@@ -243,9 +249,7 @@ def campsite_search():
 
 @app.route("/instagram.json")
 def get_instagram(): 
-
-	# origin = request.args.get('origin')
-	# origin = origin[1:4]
+	""" Get instagram feed of tags with city name. """
 
 	city = request.args.get('city')
 	city = city.replace(" ", "")
