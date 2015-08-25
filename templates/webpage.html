@@ -45,21 +45,27 @@
 	<!-- THIS IS THE MAIN USER FORM -->	  
 		<div class="user-travel-form">
 			<form id="faresearchform">
-			  <label>Enter Origin Airport: </label>
-			  	<input id="airportcodes" name="origin" placeholder="Origin Airport">
-			<br>
-			  <label>Earliest Departure Date:</label>
-			  	<input type="date" name="earliest-departure-date" id="early-depart-field">
-			<br>
-			  <label>Latest Departure Date:</label>
-			  	<input type="date" name="latest-departure-date" id="late-depart-field">
-			<br>
-			  <label>Length of Travel (in days):</label>
-			  	<input type="text" name="length-of-stay" id="length-of-stay-field" placeholder="3">
-			<br>
-			  <label>Max Budget ($):</label>
-			  	<input type="text" name="max-budget" id="max-budget-field" placeholder="200">
-			<br>
+					<div>
+					  	<label for="airportcodes">Enter Origin Airport: </label>
+					  	<input id="airportcodes" name="origin" placeholder="Origin Airport" tabindex="1">
+					</div>
+					<div>
+					  	<label for="early-depart">Earliest Departure Date:</label>
+					  	<input type="text" name="earliest-departure-date" id="early-depart" tabindex="2" placeholder="Earliest Departure Date" onfocus="(this.type='date')">
+					</div>
+					<div>
+					  	<label for="late-depart">Latest Departure Date:</label>
+					  	<input type="text" name="latest-departure-date" id="late-depart" tabindex="3" placeholder="Latest Departure Date" onfocus="(this.type='date')">
+					</div>
+					<div>
+					  	<label for="length-of-stay">Length of Travel (in days):</label>
+					  	<input type="text" name="length-of-stay" id="length-of-stay" placeholder="Length of Travel (in days)" tabindex="4">
+					</div>
+					<div>
+					  	<label for="max-budget">Max Budget ($):</label>
+					  	<input type="text" name="max-budget" id="max-budget" placeholder="Max Budget" tabindex="5">
+					</div>
+					<br>
 			 	<input type="submit" value="Let's Go!">
 			</form>
 		</div>
@@ -67,7 +73,7 @@
 
 <br>
 	<!-- THIS IS WHERE FLASH MESSAGES GO -->	
-		<div id="flash-message">
+		<div id="flash-message" visibility='hidden'>
 		</div>
 <br>
 	<!-- TESTING MAP STUFF -->
