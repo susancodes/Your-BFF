@@ -1,5 +1,6 @@
 body { 
 	margin:0; padding:0; 
+	background-color: #C6E5D9;
 }
 
 .map { 
@@ -17,18 +18,13 @@ body {
 
 #over-map-box {
 	position: absolute;
-	background-color: #fff;
+	color: #E94E77;
 	top: 50px;
 	left: 50px;
-	font-size: 16px;
+	font-size: 18px;
 	font-family: sans-serif;
-	border: 2px white solid;
-	border-radius: 10px;
 }
 
-
-.lowestfarecontent {
-}
 
 #fare-search-button {
 	text-align: center;
@@ -36,12 +32,12 @@ body {
 }
 
 .ui-menu {
-	background-color: #F7FBFF;
+	background-color: #F4EAD5;
 }
 
 
 #flash-message {
-	background-color: #f7fbff;
+	background-color: #C6E5D9;
 	font-size: 16;
 	font-style: bold;
 }
