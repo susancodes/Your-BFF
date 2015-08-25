@@ -1,13 +1,45 @@
 body { 
 	margin:0; padding:0; 
+}
+
+.container-fluid {
 	background-color: #C6E5D9;
 }
 
+
+/*FORM STUFF*/
+.row .form-group {
+	margin: 0;
+}
+
+label, input{
+    display: block; 
+    border: 0;
+}
+
+input{ 
+    width: 100%; 
+    height: 100%; 
+    padding: 2.25em 1em 1em; 
+    outline: 0;
+    border: 1px solid #C6E5D9;
+}
+
+.row .form-group label {
+    font-size: .85em; /* 13/16 */
+    position: absolute; 
+    left: 1.23em;
+    color: #64908A;
+    opacity: 1;
+}
+
+/*MAP STUFF*/
 .map { 
 	position:absolute; 
 	top:0; 
 	bottom:0; 
 	width:100%; 
+
 }
 
 #map-container {
@@ -26,11 +58,8 @@ body {
 }
 
 
-#fare-search-button {
-	text-align: center;
-	align: center;
-}
 
+/*OTHER STUFF*/
 .ui-menu {
 	background-color: #F4EAD5;
 }

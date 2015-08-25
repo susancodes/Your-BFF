@@ -14,6 +14,8 @@
 		<script src="../static/js/external/jquery/jquery.js"></script>
 		<script src="../static/js/jquery-ui.min.js"></script>
 
+	<!-- BOOTSTRAP -->
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- LINK TO MAPBOX -->
 		<meta charset=utf-8 />
@@ -42,32 +44,44 @@
 
 
 
-	<!-- THIS IS THE MAIN USER FORM -->	  
-		<div class="user-travel-form">
-			<form id="faresearchform">
-					<div>
-					  	<label for="airportcodes">Enter Origin Airport: </label>
-					  	<input id="airportcodes" name="origin" placeholder="Origin Airport" tabindex="1">
-					</div>
-					<div>
-					  	<label for="early-depart">Earliest Departure Date:</label>
-					  	<input type="text" name="earliest-departure-date" id="early-depart" tabindex="2" placeholder="Earliest Departure Date" onfocus="(this.type='date')">
-					</div>
-					<div>
-					  	<label for="late-depart">Latest Departure Date:</label>
-					  	<input type="text" name="latest-departure-date" id="late-depart" tabindex="3" placeholder="Latest Departure Date" onfocus="(this.type='date')">
-					</div>
-					<div>
-					  	<label for="length-of-stay">Length of Travel (in days):</label>
-					  	<input type="text" name="length-of-stay" id="length-of-stay" placeholder="Length of Travel (in days)" tabindex="4">
-					</div>
-					<div>
-					  	<label for="max-budget">Max Budget ($):</label>
-					  	<input type="text" name="max-budget" id="max-budget" placeholder="Max Budget" tabindex="5">
-					</div>
-					<br>
-			 	<input type="submit" value="Let's Go!">
-			</form>
+	<!-- THIS IS THE MAIN USER FORM -->	 
+		<div class="row">
+			<div class="col-sm-4"></div>
+
+			<div class="col-xs-12 col-sm-4" id="user-travel-form">
+				<form id="faresearchform">
+
+						<div class="row"><div class="form-group">
+						  	<label for="airportcodes">Enter Origin Airport: </label>
+						  	<input id="airportcodes" name="origin" placeholder="Origin Airport" tabindex="1">
+						</div></div>
+
+						<div class="row"><div class="form-group">
+						  	<label for="early-depart">Earliest Departure Date:</label>
+						  	<input type="text" name="earliest-departure-date" id="early-depart" tabindex="2" placeholder="Earliest Departure Date" onfocus="(this.type='date')">
+						</div></div>
+
+						<div class="row"><div class="form-group">
+						  	<label for="late-depart">Latest Departure Date:</label>
+						  	<input type="text" name="latest-departure-date" id="late-depart" tabindex="3" placeholder="Latest Departure Date" onfocus="(this.type='date')">
+						</div></div>
+
+						<div class="row"><div class="form-group">
+						  	<label for="length-of-stay">Length of Travel (in days):</label>
+						  	<input type="text" name="length-of-stay" id="length-of-stay" placeholder="Length of Travel (in days)" tabindex="4">
+						</div></div>
+
+						<div class="row"><div class="form-group">
+						  	<label for="max-budget">Max Budget ($):</label>
+						  	<input type="text" name="max-budget" id="max-budget" placeholder="Max Budget" tabindex="5">
+						</div></div>
+
+						<br>
+				 	<input type="submit" value="Let's Go!">
+				</form>
+			</div>
+
+			<div class="col-sm-4"></div>
 		</div>
 	</div>
 
@@ -87,7 +101,11 @@
 	</div>
 
 
-		  <!-- THIS IS LINKING SUSAN'S JS FILE -->
+
+	<!-- BOOTSTRAP -->
+		 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+	<!-- THIS IS LINKING SUSAN'S JS FILE -->
 		<script src="../static/travel.js"></script>
 	</body>
 
