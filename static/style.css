@@ -6,6 +6,18 @@ body {
 	background-color: #C6E5D9;
 }
 
+/*NAV BAR STUFF*/
+#title {
+	text-align: center;
+	color: #D68189;
+	font-weight: bold;
+	font-size: 40px;
+}
+
+.title-character{
+	color: #E94E77;
+}
+
 #nav-bar {
 	background-color: #C6E5D9;
 }
@@ -28,13 +40,27 @@ input{
     border: 1px solid #C6E5D9;
 }
 
-.row .form-group label {
+.row .form-group > label {
     font-size: .85em; /* 13/16 */
-    position: absolute; 
+    position: absolute;
     left: 1.23em;
     color: #64908A;
     opacity: 1;
+    -webkit-transition: .333s ease top, .333s ease opacity;
+    transition: .333s ease top, .333s ease opacity;
 }
+
+.js-hide-label label {
+    opacity: 0; 
+    top: 1.5em
+    border: 2px dotted red;
+}
+
+.js-unhighlight-label label {
+    color: #999
+    border: 2px solid gray;
+}
+
 
 input[type="submit"] {
     background: #64908A;
@@ -46,11 +72,13 @@ input[type="submit"] {
     -webkit-transition: .333s ease -webkit-transform;
     transition: .333s ease transform;
 }
+
 input[type="submit"]:hover {
     -webkit-transform: scale(1.025);
     transform: scale(1.025);
     cursor: pointer;
 }
+
 input[type="submit"]:active {
     -webkit-transform: scale(.975);
     transform: scale(.975);
@@ -94,4 +122,9 @@ input[type="submit"]:active {
 	background-color: #C6E5D9;
 	font-size: 16;
 	font-style: bold;
+}
+
+img {
+	height:100%;
+	width: 100%;
 }
