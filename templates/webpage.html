@@ -66,7 +66,7 @@
 			      </ul>
 			      <ul class="nav navbar-nav navbar-right">
 			        <li><a href="#" data-toggle="modal" data-target="#about-app">About</a></li>
-			        <li><a href="#backtotop">Back To Top</a></li>
+			        <li><a href="#">Back To Top</a></li>
 			      </ul>
 			    </div><!-- /.navbar-collapse -->
 			  </div><!-- /.container-fluid -->
@@ -99,12 +99,12 @@
 
 							<div class="row"><div class="form-group">
 							  	<label for="early-depart">Earliest Departure Date:</label>
-							  	<input type="text" name="earliest-departure-date" id="early-depart" tabindex="2" placeholder="Earliest Departure Date" onfocus="(this.type='date')">
+							  	<input type="date" name="earliest-departure-date" id="early-depart" tabindex="2" placeholder="Earliest Departure Date">
 							</div></div>
 
 							<div class="row"><div class="form-group">
 							  	<label for="late-depart">Latest Departure Date:</label>
-							  	<input type="text" name="latest-departure-date" id="late-depart" tabindex="3" placeholder="Latest Departure Date" onfocus="(this.type='date')">
+							  	<input type="date" name="latest-departure-date" id="late-depart" tabindex="3" placeholder="Latest Departure Date">
 							</div></div>
 
 							<div class="row"><div class="form-group">
@@ -154,8 +154,8 @@
 
 
 <!-- 	<div id="curve-chart">
-	</div> -->
-
+	</div>
+ -->
 	</div>
 
 <div class="modal fade" id="curve-chart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -189,7 +189,12 @@
       </div>
 
       <div class="modal-body">
+      	<p>Planning a trip is disheartening if you keep looking at your dream vacation and then at your economically disadvantaged bank account. Your BFF (Budget Flight Finder) takes away the frustrations of searching for travel destinations by showing you a list of roundtrip flights that fit your budget. If your budget can’t afford flights, your BFF will give you a list of nearby campsites for possible road trip plans. Knowing your options will help you explore the world!</p>
+      	<br>
         <p>Credits to <a href="https://developer.sabre.com">Sabre</a> & <a href="http://www.cometari.com">Cometari</a> for providing flight information, <a href="http://www.uscampgrounds.info">USCampgrounds</a> for the campsite data, Mapbox for the beautiful map UI, and Google for knowing all the answers to my questions.
+        <br>
+
+       	<p>About the Developer: <a href="https://www.linkedin.com/in/susanschin">Susan Chin</a></p>
       </div>
 
       <div class="modal-footer">

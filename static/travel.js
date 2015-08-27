@@ -97,11 +97,11 @@ function getFareResults(evt){
 
 	// sending GET request to get form values
 	var url = "/airfaresearch.json?origin=" + $("#airportcodes").val() + 
-				"&earliest-departure-date=" + $("#early-depart-field").val() +
-				"&latest-departure-date=" + $("#late-depart-field").val() +
-				"&length-of-stay=" + $("#length-of-stay-field").val() +
-				"&max-budget=" + $("#max-budget-field").val();
-	// console.log(url)
+				"&earliest-departure-date=" + $("#early-depart").val() +
+				"&latest-departure-date=" + $("#late-depart").val() +
+				"&length-of-stay=" + $("#length-of-stay").val() +
+				"&max-budget=" + $("#max-budget").val();
+	console.log(url)
 
 
 	// // Making an ajax call to get the API response in PLAIN JSON
@@ -155,10 +155,11 @@ function processFareResults(geojsonFeature) {
 			var lowestFareRet = fare[0].returnDateTime;
 			 
 			var fareArray = [];
-
+			debugger;
 			for (var f=0; f < fare.length; f++) {
 			
-				var date = fare[f].departureDateTime.slice(0,10);
+				var date = fare[f].departureDateTime.slice(5,10);
+				console.log(date);
 				var dateLowFare = parseInt(fare[f].lowestFare);
 				var dateLowNonStopFare = fare[f].lowestNonStopFare;
 
@@ -185,10 +186,9 @@ function processFareResults(geojsonFeature) {
 				'<div class="lowestfarecontent"><p><b>Lowest Fare: </b>$' + parseInt(lowestFare) + '</p>' +
 				'<p>Departure Date: ' + lowestFareDep.slice(0,10) + '</p>' +
 				'<p>Return Date: ' + lowestFareRet.slice(0,10) + '</p><hr color="#E94E77">' +
-				'<div id="fare-array">' + fareArray + '</div>' +
-				// '<div id="curve-chart"></div>' +
-				'<div id="instagram-box"><button class="instagram-btn">Instagram</button></div>' + 
-				'<button class="chart-btn" data-toggle="modal" data-target="#curve-chart">Chart</button>' + 
+				'<div id="fare-array" style="display: none" hidden>' + fareArray + '</div>' +
+				'<p><button class="chart-btn" data-toggle="modal" data-target="#curve-chart">View Other Flight Options</button></p>' + 
+				'<p id="instagram-box"><button class="instagram-btn">Instagram Feed</button></p>' + 
 				'</div>'
 				);
 
@@ -282,7 +282,7 @@ function initialize() {
 	$(".map").on('click', '.chart-btn', function () {
 	    var fareList = $("#fare-array").html();
 	    console.log(fareList);
-		drawChart(fareList);
+		setTimeout(function () {drawChart(fareList)}, 1000);
 	})
 }
 
@@ -321,7 +321,10 @@ function drawChart(fareList) {
 		series: {0: {color: 'C6E5D9'}, 1: {color: 'D68189'}},
 		lineWidth: 4, 
 		vAxis: {format: 'currency', title: 'Price', titleTextStyles: {fontSize: '16', fontName: 'Arial', fontStyle: 'normal'}},
-		hAxis: {title: 'Available Flight Dates'},
+		hAxis: {title: 'Available Flight Dates', 
+				direction: -1,
+		        slantedText: true,
+		        slantedTextAngle: 45},
 		titleTextStyles: {fontSize: 16, fontName: 'Arial', fontStyle: 'normal'}
 	};	
 
@@ -336,6 +339,8 @@ function drawChart(fareList) {
 	console.log(options);
 
 	var chart = new google.visualization.LineChart(document.getElementById('modal-chart'));
+
+
 	chart.draw(data, options);	
 	console.log(chart);
 
@@ -353,6 +358,10 @@ function getInstagramPics(markerCity) {
 	$.get(url, function(data) {
 		var photos = JSON.parse(data)
 		console.log(photos);
+		for (i=0; i < photos.length; i++) {
+			console.log(photos[i].caption);
+			console.log(photos[i].img_url);
+		}
 	})
 }
 
@@ -430,7 +439,7 @@ function flightsMapMessage() {
 }
 
 function campsiteMapMessage() {
-	$("#over-map-box").html("Consider taking a road trip and camping!");
+	$("#over-map-box").html("Consider taking a road trip to one of these campsites!");
 	$("#over-map-box").show();
 
 }
