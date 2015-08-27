@@ -123,6 +123,7 @@ function getFareResults(evt){
 		} else {
 			processFareResults(geojsonFeature);
 		}
+		window.location = "#linktomap";
 
 	})
 }
@@ -187,7 +188,7 @@ function processFareResults(geojsonFeature) {
 				'<div id="fare-array">' + fareArray + '</div>' +
 				// '<div id="curve-chart"></div>' +
 				'<div id="instagram-box"><button class="instagram-btn">Instagram</button></div>' + 
-				'<button class="chart-btn">Chart</button>' + 
+				'<button class="chart-btn" data-toggle="modal" data-target="#curve-chart">Chart</button>' + 
 				'</div>'
 				);
 
@@ -311,11 +312,11 @@ function drawChart(fareList) {
 	}
 
 	var options = {
-		title: 'Fare Calendar for ' + $("#city-name").text(),
+		title: $("#city-name").text(),
 		titleTextStyles: {size: 16, color: '#3399ff'},
 		curveType: 'function',
-		height: 500,
-		width: 500,
+		height: 600,
+		width: 550,
 		legend: {position: 'bottom'},
 		series: {0: {color: 'C6E5D9'}, 1: {color: 'D68189'}},
 		lineWidth: 4, 
@@ -334,7 +335,7 @@ function drawChart(fareList) {
 	console.log(data);
 	console.log(options);
 
-	var chart = new google.visualization.LineChart(document.getElementById('curve-chart'));
+	var chart = new google.visualization.LineChart(document.getElementById('modal-chart'));
 	chart.draw(data, options);	
 	console.log(chart);
 

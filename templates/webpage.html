@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Let's explore!</title>
+		<title>Your BFF</title>
 
 <!-- LINK ALL THE THINGS!!! -->
-	<link rel="stylesheet" href="/static/style.css"></script>
 
 	<!-- LINK TO JQUERY FILE -->
 		<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
@@ -36,21 +35,47 @@
 	          }">
 	    </script>
 
+	<link rel="stylesheet" href="/static/style.css"></script>
+
 	</head>
 
 	<body>
+	<a id="backtotop"></a>
 
 	<div class="section">
 
+
+			<!-- THIS IS THE NAV BAR  -->
+			<nav class="navbar navbar-default navbar-fixed-top">
+			  <div class="container-fluid">
+			    <!-- Brand and toggle get grouped for better mobile display -->
+			    <div class="navbar-header">
+			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			      </button>
+			      <a class="navbar-brand" href="#"><span class="title-character">B</span>udget <span class="title-character">F</span>light <span class="title-character">F</span>inder</a>
+			    </div>
+
+			    <!-- Collect the nav links, forms, and other content for toggling -->
+			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			      <ul class="nav navbar-nav">
+			        <li><a href="#"></a></li>
+			      </ul>
+			      <ul class="nav navbar-nav navbar-right">
+			        <li><a href="#" data-toggle="modal" data-target="#about-app">About</a></li>
+			        <li><a href="#backtotop">Back To Top</a></li>
+			      </ul>
+			    </div><!-- /.navbar-collapse -->
+			  </div><!-- /.container-fluid -->
+			</nav> <!-- END OF NAVBAR -->
+
+		<br>
+		<br>
+
 		<div class="container-fluid">
-
-			<div class="row">
-				<div class="col-xs-12" id="nav-bar">
-					<p id="title"><span class="title-character">B</span>udget <span class="title-character">F</span>light <span class="title-character">F</span>inder</p>
-				</div>
-			</div>
-
-
 
 		<!-- THIS IS THE MAIN USER FORM -->	 
 			<div class="row">
@@ -93,7 +118,7 @@
 							</div></div>
 
 							<br>
-					 	<a name="linktomap"><input type="submit" value="Let's Go!"></a>
+					 	<input type="submit" id="form-submit" value="Adventure Awaits!">
 					</form>
 				</div>
 
@@ -108,24 +133,70 @@
 				</div>
 			</div>
 		</div>
-	</div> 
+
+	<!-- THIS IS WHERE FLASH MESSAGES GO -->
+		<a id="linktomap"></a>	
 
 <br>
-	<!-- THIS IS WHERE FLASH MESSAGES GO -->
-		<a href="#linktomap"></a>	
+<br>
+<br>
+<br>
+<br>
+
 		<div id="flash-message" visibility='hidden'>
 		</div>
 <br>
-	<!-- TESTING MAP STUFF -->
+	<!-- MAP STUFF -->
 	<div id='map-container'>
 		<div id='map-leaflet' class='map'></div>
 		<div id='over-map-box'></div>
 	</div>
 
 
-	<div id="curve-chart">
+<!-- 	<div id="curve-chart">
+	</div> -->
+
 	</div>
 
+<div class="modal fade" id="curve-chart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Fare Calendar</h4>
+      </div>
+
+      <div class="modal-body" id="modal-chart">
+
+      </div>
+
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- ABOUT SECTION (MODAL WINDOW) -->
+<div class="modal fade" id="about-app" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">About This Webapp</h4>
+      </div>
+
+      <div class="modal-body">
+        <p>Credits to <a href="https://developer.sabre.com">Sabre</a> & <a href="http://www.cometari.com">Cometari</a> for providing flight information, <a href="http://www.uscampgrounds.info">USCampgrounds</a> for the campsite data, Mapbox for the beautiful map UI, and Google for knowing all the answers to my questions.
+      </div>
+
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
 
 
 	<!-- BOOTSTRAP -->
