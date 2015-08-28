@@ -126,9 +126,9 @@ def airfare_search():
 	headers = {"Authorization": sabre_access_token}
 
 	base_url = "http://bridge2.sabre.cometari.com/shop/flights/fares?"
-	# param_url = "origin=SFO&earliestdeparturedate=2015-09-01&latestdeparturedate=2015-09-09&lengthofstay=3&maxfare=500&pointofsalecountry=US&ac2lonlat=1" 
-	param_url = "origin=%s&earliestdeparturedate=%s&latestdeparturedate=%s&lengthofstay=%s&maxfare=%s&pointofsalecountry=US&ac2lonlat=1" % (
-		origin, earliest_departure, latest_departure, length_of_stay, max_budget)
+	param_url = "origin=SFO&earliestdeparturedate=2015-09-01&latestdeparturedate=2015-09-09&lengthofstay=3&maxfare=500&pointofsalecountry=US&ac2lonlat=1" 
+	# param_url = "origin=%s&earliestdeparturedate=%s&latestdeparturedate=%s&lengthofstay=%s&maxfare=%s&pointofsalecountry=US&ac2lonlat=1" % (
+		# origin, earliest_departure, latest_departure, length_of_stay, max_budget)
 	
 	# putting together the url to request to Sabre's API
 	final_url = base_url + param_url

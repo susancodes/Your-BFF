@@ -155,7 +155,7 @@ function processFareResults(geojsonFeature) {
 			var lowestFareRet = fare[0].returnDateTime;
 			 
 			var fareArray = [];
-			debugger;
+			
 			for (var f=0; f < fare.length; f++) {
 			
 				var date = fare[f].departureDateTime.slice(5,10);
@@ -361,9 +361,9 @@ function getInstagramPics(markerCity) {
 		var photos = JSON.parse(data)
 		console.log(photos);
 		for (i=0; i < photos.length; i++) {
-			console.log(photos[i].caption);
+			var img_caption = photos[i].caption;
 			var img_url = photos[i].img_url;
-			$('ul#instagram-photos').append('<li><img src="' + img_url + '"></li>');
+			$('ul#instagram-photos').append('<li><img src="' + img_url + '" title="'+ img_caption + '"></li>');
 		}
 	})
 }

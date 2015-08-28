@@ -1,16 +1,21 @@
 body { 
-	margin: 0 ; 
+    margin: 0 ; 
     padding-top:50px; 
 }
 
 .container-fluid {
-	background-color: #C6E5D9;
+    background-color: #C6E5D9;
     margin-bottom: 0;
 }
 
 .section {
     margin-bottom: 0;
     background-color: #C6E5D9;
+}
+
+img {
+	height:100%;
+	width: 100%;
 }
 
 /*LINKS*/
@@ -58,13 +63,13 @@ nav.navbar.navbar-default.navbar-fixed-top {
 
 
 .title-character{
-	color: #E94E77;
+    color: #E94E77;
 }
 
 
 /*FORM STUFF*/
 .row .form-group {
-	margin: 0;
+    margin: 0;
 }
 
 label, input{
@@ -128,26 +133,26 @@ input[type="submit"]:active {
 
 /*MAP STUFF*/
 .map { 
-	position:absolute; 
-	top:0; 
-	bottom:0; 
-	width:100%; 
+    position:absolute; 
+    top:0; 
+    bottom:0; 
+    width:100%; 
 
 }
 
 #map-container {
-	position: relative;
-	top: 0;
-	height: 600px;
+    position: relative;
+    top: 0;
+    height: 600px;
 }
 
 #over-map-box {
-	position: absolute;
-	color: #E94E77;
-	top: 50px;
-	left: 50px;
-	font-size: 18px;
-	font-family: sans-serif;
+    position: absolute;
+    color: #E94E77;
+    top: 50px;
+    left: 50px;
+    font-size: 18px;
+    font-family: sans-serif;
 }
 
 
@@ -155,19 +160,29 @@ input[type="submit"]:active {
 
 
 
+
+/*INSTAGRAM STUFF*/
+li > img {
+    height: 250px;
+    width: 250px;
+}
+
+ul#instagram-photos > li {
+    list-style: none;
+    display: inline-block;
+    text-align: center;
+}
+
+
+
 /*OTHER STUFF*/
 .ui-menu {
-	background-color: #F4EAD5;
+    background-color: #F4EAD5;
 }
 
 
 #flash-message {
-	background-color: #C6E5D9;
-	font-size: 16;
-	font-style: bold;
-}
-
-img {
-	height:100%;
-	width: 100%;
+    background-color: #C6E5D9;
+    font-size: 16;
+    font-style: bold;
 }
