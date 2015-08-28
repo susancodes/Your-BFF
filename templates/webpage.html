@@ -56,17 +56,17 @@
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>
 			      </button>
-			      <a class="navbar-brand" href="#"><span class="title-character">B</span>udget <span class="title-character">F</span>light <span class="title-character">F</span>inder</a>
+			      <a class="navbar-brand" href="#">Budget Flight Finder</a>
 			    </div>
 
 			    <!-- Collect the nav links, forms, and other content for toggling -->
 			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			      <ul class="nav navbar-nav">
-			        <li><a href="#"></a></li>
+			        <li><a href="#"><img id="logo" src="/static/img/logo1.png"></a></li>
 			      </ul>
 			      <ul class="nav navbar-nav navbar-right">
 			        <li><a href="#" data-toggle="modal" data-target="#about-app">About</a></li>
-			        <li><a href="#">Back To Top</a></li>
+			        <li><a href="#"><img class='icon' src='/static/img/mag_glass.png' data-toggle="tooltip" data-placement="bottom" title="Search Again"</a></li>
 			      </ul>
 			    </div><!-- /.navbar-collapse -->
 			  </div><!-- /.container-fluid -->
@@ -76,16 +76,30 @@
 		<br>
 
 		<div class="container-fluid">
+<!-- 
+							<img class="active" src="static/img/sky-people-whitespace-freedom.jpg" alt="My image" />
+							<img src="static/img/sea-sky-beach-holiday.jpg" alt="My image" />	
+							<img src="static/img/beach.jpg" alt="My image" />	
+							<img src="static/img/croatia.jpg" alt="My image" />	 -->
 
+			
 		<!-- THIS IS THE MAIN USER FORM -->	 
 			<div class="row">
 				<div class="col-sm-4">
 					<div class="row">
-						<div class="col-xs-12" position="absolute"><img class="img-responsive" src="static/img/sea-sky-beach-holiday.jpg" alt="Road Trip"></div>
+						<div class="col-xs-12" position="absolute" id="cycler">
+
+							<img class="img-responsive" src="static/img/sea-sky-beach-holiday.jpg" alt="Road Trip">
+
+						</div>
 					</div>
 					<br>
 					<div class="row">
-						<div class="col-xs-12"><img class="img-responsive" src="static/img/beach.jpg" alt="Beach"></div>
+						<div class="col-xs-12">
+
+							<img class="img-responsive" src="static/img/beach.jpg" alt="Beach">
+
+						</div>
 					</div>
 				</div>
 
@@ -99,12 +113,12 @@
 
 							<div class="row"><div class="form-group">
 							  	<label for="early-depart">Earliest Departure Date:</label>
-							  	<input type="date" name="earliest-departure-date" id="early-depart" tabindex="2" placeholder="Earliest Departure Date">
+							  	<input type="date" name="earliest-departure-date" id="early-depart" tabindex="2" placeholder="Earliest Departure Date" value="2015-09-05">
 							</div></div>
 
 							<div class="row"><div class="form-group">
 							  	<label for="late-depart">Latest Departure Date:</label>
-							  	<input type="date" name="latest-departure-date" id="late-depart" tabindex="3" placeholder="Latest Departure Date">
+							  	<input type="date" name="latest-departure-date" id="late-depart" tabindex="3" placeholder="Latest Departure Date" value="2015-09-19">
 							</div></div>
 
 							<div class="row"><div class="form-group">
@@ -124,11 +138,19 @@
 
 				<div class="col-sm-4">
 					<div class="row">
-						<div class="col-xs-12"><img class="img-responsive" src="static/img/sky-people-whitespace-freedom.jpg" alt="Hot Air Balloon"></div>
+						<div class="col-xs-12">
+						
+							<img class="img-responsive" src="static/img/sky-people-whitespace-freedom.jpg" alt="Hot Air Balloon">
+
+						</div>
 					</div>
 					<br>
 					<div class="row">
-						<div class="col-xs-12"><img class="img-responsive" src="static/img/croatia.jpg" alt="Plitvice, Croatia"></div>
+						<div class="col-xs-12">
+
+							<img class="img-responsive" src="static/img/croatia.jpg" alt="Plitvice, Croatia">
+						
+						</div>
 					</div>
 				</div>
 			</div>
@@ -216,7 +238,7 @@
       <div class="modal-body">
       	<p>Planning a trip is disheartening if you keep looking at your dream vacation and then at your economically disadvantaged bank account. Your BFF (Budget Flight Finder) takes away the frustrations of searching for travel destinations by showing you a list of roundtrip flights that fit your budget. If your budget can’t afford flights, your BFF will give you a list of nearby campsites for possible road trip plans. Knowing your options will help you explore the world!</p>
       	<br>
-        <p>Credits to <a href="https://developer.sabre.com">Sabre</a> & <a href="http://www.cometari.com">Cometari</a> for providing flight information, <a href="http://www.uscampgrounds.info">USCampgrounds</a> for the campsite data, Mapbox for the beautiful map UI, and Google for knowing all the answers to my questions.
+        <p>Credits to <a href="https://developer.sabre.com">Sabre</a> & <a href="http://www.cometari.com">Cometari</a> for providing flight information, <a href="http://www.uscampgrounds.info">USCampgrounds</a> for the campsite data, Mapbox for the beautiful map UI, and Google for knowing all the answers to my questions.</p>
         <br>
 
        	<p>About the Developer: <a href="https://www.linkedin.com/in/susanschin">Susan Chin</a></p>

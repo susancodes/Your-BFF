@@ -19,46 +19,54 @@ img {
 }
 
 /*LINKS*/
-.navbar-default .navbar-nav>ul>li>a:hover {
+/*.navbar-default .navbar-nav>ul>li>a:hover {
     color: #fff;
-}
+}*/
 
-.navbar-default .navbar-nav>li>a:link, .navbar-default .navbar-nav>li>a:visited {
-    color: #64908A;
+.navbar-default .navbar-nav>li>a {
+    top: 8px;
+    color: #000;
+    padding-right: 30px;
 }
 
 /*NAV BAR STUFF*/
 
+/*this controls the links on the right of navbar */
 nav.navbar.navbar-default.navbar-fixed-top {
     background-color: #fff
+    height: 40px;
 }
 
+
+
 .navbar-default {
-    border-color: #64908A;
+    border: none;
+
 }
 
 .navbar-brand {
     position: absolute;
     width: 100%;
     left: 0;
-    top: 0;
+    top: 8px;
     text-align: center;
     margin: auto;
 }
 
-.btn-group-vertical>.btn-group:after, .btn-toolbar:after, .clearfix:after, .container-fluid:after, .container:after, .dl-horizontal dd:after, .form-horizontal .form-group:after, .modal-footer:after, .nav:after, .navbar-collapse:after, .navbar-header:after, .navbar:after, .pager:after, .panel-body:after, .row:after {
+/*.btn-group-vertical>.btn-group:after, .btn-toolbar:after, .clearfix:after, .container-fluid:after, .container:after, .dl-horizontal dd:after, .form-horizontal .form-group:after, .modal-footer:after, .nav:after, .navbar-collapse:after, .navbar-header:after, .navbar:after, .pager:after, .panel-body:after, .row:after {
     clear: both;
-}
+}*/
 
 .navbar-default .navbar-brand, .navbar-default .navbar-brand:visited {
-    color: #D68189;
+    top: 10px;
+    color: #64908A;
     font-weight: bold;
     font-size: 30px;
 
 }
 
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:active {
-    color: #F4EAD5;
+    color: #D68189;
 }
 
 
@@ -143,7 +151,7 @@ input[type="submit"]:active {
 #map-container {
     position: relative;
     top: 0;
-    height: 600px;
+    height: 700px;
 }
 
 #over-map-box {
@@ -186,3 +194,31 @@ ul#instagram-photos > li {
     font-size: 16;
     font-style: bold;
 }
+
+
+
+#cycler img{
+    position:relative;
+    z-index:1
+}
+
+#cycler img.active{
+    z-index:3
+}
+
+img#logo {
+    position: absolute;
+    height: 50px;
+    width: 120px;
+    top: 0px;
+}
+
+div#bx-example-navbar-collapse-1.collapse.navbar-collapse{
+    height: 55px;
+}
+
+img.icon {
+    width: 30px;
+    height: 30px;
+}
+

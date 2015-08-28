@@ -209,7 +209,7 @@ function processFareResults(geojsonFeature) {
 
 	// tells user that they're seeing flight results
 	flightsMapMessage();
-	setTimeout(emptyMapMessage, 7000);
+	setTimeout(emptyMapMessage, 20000);
 
 }
 
@@ -268,7 +268,7 @@ function searchCampsites() {
 
 	// let the user know they're getting campsite results
 	campsiteMapMessage();
-	setTimeout(emptyMapMessage, 7000);
+	setTimeout(emptyMapMessage, 20000);
 }
 
 
@@ -436,13 +436,13 @@ function emptyFlashMessage() {
 }
 
 function flightsMapMessage() {
-	$("#over-map-box").html("Have a safe flight!");
+	$("#over-map-box").html("<img class='icon' src='/static/img/airplane.png'>Have a safe flight!");
 	$("#over-map-box").show();
 
 }
 
 function campsiteMapMessage() {
-	$("#over-map-box").html("Consider taking a road trip to one of these campsites!");
+	$("#over-map-box").html("<img class='icon' src='/static/img/car-icon.png'>Consider taking a road trip to one of these campsites!");
 	$("#over-map-box").show();
 
 }
@@ -452,6 +452,22 @@ function emptyMapMessage() {
 	$("#over-map-box").hide();
 }
 
+
+
+function cycleImages(){
+      var $active = $('#cycler .active');
+      var $next = ($active.next().length > 0) ? $active.next() : $('#cycler img:first');
+      $next.css('z-index',2);//move the next image up the pile
+      $active.fadeOut(1500,function(){//fade out the top image
+	  $active.css('z-index',1).show().removeClass('active');//reset the z-index and unhide the image
+          $next.css('z-index',3).addClass('active');//make the next image the top one
+      });
+    }
+
+$(document).ready(function(){
+// run every 7s
+setInterval('cycleImages()', 7000);
+})
 
 
 
