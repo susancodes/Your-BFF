@@ -188,7 +188,7 @@ function processFareResults(geojsonFeature) {
 				'<p>Return Date: ' + lowestFareRet.slice(0,10) + '</p><hr color="#E94E77">' +
 				'<div id="fare-array" style="display: none" hidden>' + fareArray + '</div>' +
 				'<p><button class="chart-btn" data-toggle="modal" data-target="#curve-chart">View Other Flight Options</button></p>' + 
-				'<p id="instagram-box"><button class="instagram-btn">Instagram Feed</button></p>' + 
+				'<p id="instagram-box"><button class="instagram-btn" data-toggle="modal" data-target="#instagram-feed">Instagram Feed</button></p>' + 
 				'</div>'
 				);
 
@@ -355,12 +355,15 @@ function getInstagramPics(markerCity) {
 	var city = markerCity
 	console.log("city: " + city);
 	var url = "/instagram.json?city=" + city
+	$('ul#instagram-photos').html('');
+
 	$.get(url, function(data) {
 		var photos = JSON.parse(data)
 		console.log(photos);
 		for (i=0; i < photos.length; i++) {
 			console.log(photos[i].caption);
-			console.log(photos[i].img_url);
+			var img_url = photos[i].img_url;
+			$('ul#instagram-photos').append('<li><img src="' + img_url + '"></li>');
 		}
 	})
 }
@@ -392,7 +395,7 @@ $("#airportcodes").autocomplete({
 
 // when user clicks instagram button
 $('.map').on('click', '.instagram-btn', function() {
-    alert("I'm doing instagram things!");
+    // alert("I'm doing instagram things!");
     var city = $("#city-name").text();
     console.log(city);
     getInstagramPics(city);
