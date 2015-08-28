@@ -9,5 +9,5 @@ Credits to Sabre & Cometari for providing flight information, USCampgrounds for 
 
 ## About the Developer
 
-[Susan Chin](https://www.linkedin.com/in/susanschin) is part of the Summer 2015 Hackbright Academy Full-Time Software Engineering Immersive Fellowship for women. This is her final project to showcase what she's learned within 10 weeks of the program.
+[Susan Chin](https://www.linkedin.com/in/susanschin) is part of the Summer 2015 Hackbright Academy Full-Time Software Engineering Immersive Fellowship for women. The fellowship is a total of 10-weeks long with the first half focused on structured lectures and lab time and the second half focused on a personal project. This is Susan's project to showcase what she's learned from the accelerated program.
 
