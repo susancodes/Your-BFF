@@ -45,6 +45,8 @@ nav.navbar.navbar-default.navbar-fixed-top {
 }
 
 .navbar-brand {
+    font-family: 'Courgette', sans-serif;
+    font-size: 50px;
     position: absolute;
     width: 100%;
     left: 0;
@@ -116,6 +118,8 @@ input{
 
 
 input[type="submit"] {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
     background: #64908A;
     margin-bottom: 1em;
     color: white;
@@ -221,4 +225,8 @@ img.icon {
     width: 30px;
     height: 30px;
 }
+
+
+
+
 
