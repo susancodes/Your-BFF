@@ -314,9 +314,9 @@ function drawChart(fareList) {
 	var options = {
 		title: $("#city-name").text(),
 		titleTextStyles: {size: 16, color: '#3399ff'},
-		curveType: 'function',
+		// curveType: 'function',
 		animation: {'startup': true, 
-					duration: 2000,
+					duration: 1000,
 					easing: 'out'},
 		height: 600,
 		width: 550,

@@ -12,6 +12,7 @@ import os
 
 instagram_client_id = os.environ["INSTAGRAM_CLIENT_ID"]
 sabre_access_token = os.environ["SABRE_ACCESS_TOKEN"]
+forecast_key = os.environ["FORECAST_KEY"]
 
 app = Flask(__name__)
 
@@ -170,7 +171,6 @@ def airfare_search():
 			one_result = FlightDestinMarker(lon, lat, airport_code, city, fares)
 
 			fare_list.append(one_result)
-
 	
 
 	marker_collection = geojson.FeatureCollection(fare_list)
@@ -285,6 +285,22 @@ def get_instagram():
 	print "I'M INSTAGRAM API ENDPOINT URL: ", instagram_url
 
 	return json.dumps(photo_list)
+
+
+def get_weather(lat, lon, date):
+
+	datetime = date + "T12:00:00"
+
+	url = "https://api.forecast.io/forecast/%s/%s,%s,%s" % (forecast_key, lat, lon, datetime)
+
+	response = requests.get(url)
+
+	response_json = response.json()
+
+	
+	temp = response_json['hourly']['data'][0]['temperature']
+	
+	return temp
 
 
 
