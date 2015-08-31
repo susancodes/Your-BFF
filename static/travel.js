@@ -304,9 +304,9 @@ function drawChart(fareList) {
 	    console.log(fareList[0]);
 	    console.log(fareList[1]);
 	    console.log(fareList[2]);
-	    var date1 = fareList.shift();
-	    var fare1 = parseInt(fareList.shift());
-	    var nonstopfare1 = parseInt(fareList.shift());
+	    var nonstopfare1 = parseInt(fareList.pop());
+	    var fare1 = parseInt(fareList.pop());
+	    var date1 = fareList.pop();
 
 	    data.addRow([date1, fare1, nonstopfare1]);
 	}
@@ -314,7 +314,7 @@ function drawChart(fareList) {
 	var options = {
 		title: $("#city-name").text(),
 		titleTextStyles: {size: 16, color: '#3399ff'},
-		// curveType: 'function',
+		curveType: 'function',
 		animation: {'startup': true, 
 					duration: 1000,
 					easing: 'out'},

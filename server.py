@@ -271,7 +271,6 @@ def get_instagram():
 	photo_list = []
 
 	for item in results:
-		print "I'M HERE"
 		text = item["caption"]["text"]
 		low_res_img = item["images"]["low_resolution"]["url"]
 		link = item["link"]
