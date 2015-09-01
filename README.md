@@ -32,7 +32,7 @@ Planning a trip is disheartening if you keep looking at your dream vacation and 
 
 Here are all the destinations with its lowest roundtrip fares within your budget
 
-![image](https://cloud.githubusercontent.com/assets/12265692/9592924/594f05a0-4ffd-11e5-966d-ccac3aa475ce.png)
+![image](https://cloud.githubusercontent.com/assets/12265692/9593741/4f4a2594-5007-11e5-9bd7-4daf4c650d2a.png)
 
 
 
