@@ -5,7 +5,7 @@ Planning a trip is disheartening if you keep looking at your dream vacation and 
 
 ## Table of Contents
 
-* [Required User Input](#requird-input)
+* [Required User Input](#required-input)
 * [Round-trip Flights Output](#flights-output)
 * [Campsites Output](#campsites-output)
 * [Tech Stack](#tech-stack)
