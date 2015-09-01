@@ -74,6 +74,7 @@ Pink markers with an airplane icon indicate ONE unique destination
 
 
 More flight options button returns a fare calendar of other possible flight options on other dates within the user specified earliest and latest depature date range.
+![image](https://cloud.githubusercontent.com/assets/12265692/9614303/de660d30-50a5-11e5-98f5-ddb493e815f3.png)
 ![image](https://cloud.githubusercontent.com/assets/12265692/9593131/9d399ca6-4fff-11e5-8a0e-4262ebdf28e8.png)
 
 
