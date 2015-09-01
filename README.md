@@ -50,7 +50,7 @@ Green circular markers have less than ten destinations in that cluster
 
 Pink markers with an airplane icon indicate ONE unique destination
 
-![image](https://cloud.githubusercontent.com/assets/12265692/9593005/6502716a-4ffe-11e5-9558-e1dd6331885a.png)
+![image](https://cloud.githubusercontent.com/assets/12265692/9593656/290866a8-5006-11e5-86a0-d343b483a43c.png)
 
 
 
