@@ -12,15 +12,6 @@ var layerGroup = L.layerGroup().addTo(mapLeaflet);
 // must declare feature group to set bounds
 var featureGroup = L.featureGroup(layerGroup);
 
-
-// Style the marker icon
-var myIcon = L.icon({
-	iconUrl: '/static/img/airplane-icon.png',
-	iconSize: [38, 95],
-	iconAnchor: [22, 94],
-	popupAnchor: [-3, -76],
-});
-
 mapLeaflet.scrollWheelZoom.disable();
 
 
