@@ -38,13 +38,13 @@ Here are all the destinations with its lowest roundtrip fares within your budget
 
 Yellow circular markers indicate a cluster of destinations. The number on the marker indicates the number of destinations in that cluster. The yellow markers have ten or more destinations in that cluster.
 
-![image](https://cloud.githubusercontent.com/assets/12265692/9593001/556db1ec-4ffe-11e5-8ac8-7142b3909b7e.png)
+![image](https://cloud.githubusercontent.com/assets/12265692/9593678/721bd1cc-5006-11e5-8bea-d49c3f9cf895.png)
 
 
 
 Green circular markers have less than ten destinations in that cluster
 
-![image](https://cloud.githubusercontent.com/assets/12265692/9593004/609980f0-4ffe-11e5-97c9-90c3d79506d0.png)
+![image](https://cloud.githubusercontent.com/assets/12265692/9593693/a804438c-5006-11e5-999c-e57ce5701b10.png)
 
 
 
