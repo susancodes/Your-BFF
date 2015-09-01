@@ -3,10 +3,21 @@
 Planning a trip is disheartening if you keep looking at your dream vacation and then at your economically disadvantaged bank account. Your BFF (Budget Flight Finder) takes away the frustrations of searching for travel destinations by showing you a list of roundtrip flights that fit your budget. If your budget can’t afford flights, your BFF will give you a list of nearby campsites for possible road trip plans. Knowing your options will help you explore the world!
 
 
+## Table of Contents
+
+* [Required User Input](#requird-input)
+* [Round-trip Flights Output](#flights-output)
+* [Campsites Output](#campsites-output)
+* [Tech Stack](#tech-stack)
+* [Credits](#credits)
+* [About The Developer](#about-me)
+
+
+
 ---------------------
 
 
-### Required User Input
+### <a name="required-input"></a>Required User Input
 
 - Origin Airport
 > Enter a city and select from the airports from the autocomplete function
@@ -28,7 +39,7 @@ Planning a trip is disheartening if you keep looking at your dream vacation and 
 -------------------
 
 
-### Round Trip Flights Output
+### <a name="flights-output"></a>Round-trip Flights Output
 
 Here are all the destinations with its lowest roundtrip fares within your budget
 
@@ -69,7 +80,7 @@ More flight options button returns a fare calendar of other possible flight opti
 -------------------
 
 
-### Campsites Output
+### <a name="campsites-output"></a>Campsites Output
 
 When a user's budget does not return any flight options, it will output campsite locations within a 100-mile-radius. 
 
@@ -93,7 +104,7 @@ Green markers with a tree icon indicate ONE unique campsite information.
 
 ---------------------
 
-### Tech Stack & APIs
+### <a name="tech-stack"></a>Tech Stack & APIs
 
 Python, SQLite database of airport codes and cities for autocomplete feature and database of campsites, geoJSON to format data to be used with Mapbox API, Google Charts API for the Fare Calendar, and Instagram API.
 
@@ -103,12 +114,12 @@ I chose to make a single-page webapp because I wanted to be more fluent in Javas
 ----------------------
 
 
-### Credits
+### <a name="credits"></a>Credits
 
 Credits to Sabre & Cometari for providing flight information, USCampgrounds for the campsite data, Mapbox for the beautiful map UI, Instagram for the photo feed, and Google Charts API.
 
 
-### About the Developer
+### <a name="about-me"></a>About the Developer
 
 [Susan Chin](https://www.linkedin.com/in/susanschin) is part of the Summer 2015 Hackbright Academy Full-Time Software Engineering Immersive Fellowship for women. The fellowship is a total of 10-weeks long with the first half focused on structured lectures and lab time and the second half focused on a personal project. This is Susan's project to showcase what she's learned from the accelerated program.
 
