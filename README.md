@@ -26,22 +26,24 @@ Planning a trip is disheartening if you keep looking at your dream vacation and 
 Here are all the destinations with its lowest roundtrip fares within your budget
 ![image](https://cloud.githubusercontent.com/assets/12265692/9592924/594f05a0-4ffd-11e5-966d-ccac3aa475ce.png)
 
-Yellow circular markers indicate a cluster of destinations. The number on the marker indicates the number of destinations in that cluster. The yellow markers have ten or more destinations in that cluster.
-![image](https://cloud.githubusercontent.com/assets/12265692/9593001/556db1ec-4ffe-11e5-8ac8-7142b3909b7e.png)
+-Yellow circular markers indicate a cluster of destinations. The number on the marker indicates the number of destinations in that cluster. The yellow markers have ten or more destinations in that cluster.
+>![image](https://cloud.githubusercontent.com/assets/12265692/9593001/556db1ec-4ffe-11e5-8ac8-7142b3909b7e.png)
 
 Green circular markers have less than ten destinations in that cluster
-![image](https://cloud.githubusercontent.com/assets/12265692/9593004/609980f0-4ffe-11e5-97c9-90c3d79506d0.png)
+>![image](https://cloud.githubusercontent.com/assets/12265692/9593004/609980f0-4ffe-11e5-97c9-90c3d79506d0.png)
 
 Pink markers with an airplane icon indicate ONE unique destination
-![image](https://cloud.githubusercontent.com/assets/12265692/9593005/6502716a-4ffe-11e5-9558-e1dd6331885a.png)
+>![image](https://cloud.githubusercontent.com/assets/12265692/9593005/6502716a-4ffe-11e5-9558-e1dd6331885a.png)
 
 Each destination has a pop-up with a summary
 - Lowest Fare: absolute lowest roundtrip fare price within the specified dates and budget
 - Depature & Return Dates correspond to the above said lowest flight
+
 ![image](https://cloud.githubusercontent.com/assets/12265692/9593130/985b781c-4fff-11e5-9ce3-2897f6ce2e21.png)
 
 
-![image](https://cloud.githubusercontent.com/assets/12265692/9593130/985b781c-4fff-11e5-9ce3-2897f6ce2e21.png) More flight options button returns a fare calendar of other possible flight options on other dates within the user specified earliest and latest depature date range.
+More flight options button returns a fare calendar of other possible flight options on other dates within the user specified earliest and latest depature date range.
+>![image](https://cloud.githubusercontent.com/assets/12265692/9593339/fd23cbf8-5001-11e5-9f70-59bc8db275ab.png) 
 ![image](https://cloud.githubusercontent.com/assets/12265692/9593131/9d399ca6-4fff-11e5-8a0e-4262ebdf28e8.png)
 
 
