@@ -78,8 +78,8 @@ $(document).ready(function(){
 function getFareResults(evt){
 // get flight results
 
-	showLoadingMessage();
-	setTimeout(emptyFlashMessage, 3000);
+	// showLoadingMessage();
+	// setTimeout(emptyFlashMessage, 3000);
 
 	// preventing form submission
 	evt.preventDefault();
