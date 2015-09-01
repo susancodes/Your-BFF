@@ -4,13 +4,13 @@ body {
 }
 
 .container-fluid {
-    background-color: #D5F3E3;
+    background-color: #C6E5D9;
     margin-bottom: 0;
 }
 
 .section {
     margin-bottom: 0;
-    background-color: #D5F3E3;
+    background-color: #C6E5D9;
 }
 
 img {
@@ -61,14 +61,14 @@ nav.navbar.navbar-default.navbar-fixed-top {
 
 .navbar-default .navbar-brand, .navbar-default .navbar-brand:visited {
     top: 10px;
-    color: #7DA47C;
+    color: #64908A;
     font-weight: bold;
     font-size: 30px;
 
 }
 
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:active {
-    color: #F3B084;
+    color: #E94E77;
 }
 
 
@@ -88,14 +88,14 @@ input{
     height: 100%; 
     padding: 2.25em 1em 1em; 
     outline: 0;
-    border: 1px solid #7DA47C;
+    border: 1px solid #64908A;
 }
 
 .row .form-group > label {
     font-size: .85em; /* 13/16 */
     position: absolute;
     left: 1.23em;
-    color: #7DA47C;
+    color: #64908A;
     opacity: 1;
     -webkit-transition: .333s ease top, .333s ease opacity;
     transition: .333s ease top, .333s ease opacity;
@@ -116,7 +116,7 @@ input{
 input[type="submit"] {
     font-family: 'Nunito', sans-serif;
     font-weight: 400;
-    background: #7DA47C;
+    background: #64908A;
     margin-bottom: 1em;
     color: white;
     border-radius: 3px;
@@ -156,7 +156,7 @@ input[type="submit"]:active {
 
 #over-map-box {
     position: absolute;
-    color: #7DA47C;
+    color: #E94E77;
     top: 80px;
     left: 50px;
     font-size: 18px;
@@ -185,26 +185,17 @@ ul#instagram-photos > li {
 
 /*OTHER STUFF*/
 .ui-menu {
-    background-color: #F0EFB4;
+    background-color: #F4EAD5;
 }
 
 
 #flash-message {
-    background-color: #D5F3E3;
+    background-color: #C6E5D9;
     font-size: 16;
     font-style: bold;
 }
 
 
-
-#cycler img{
-    position:relative;
-    z-index:1
-}
-
-#cycler img.active{
-    z-index:3
-}
 
 img#logo {
     position: absolute;
@@ -223,7 +214,7 @@ img.icon {
 }
 
 .jumbotron {
-    background-image: url(./img/sunset-1.jpg);
+    background-image: url(./img/plane-green-2.jpg);
     background-size: cover;
     height: 100%;
     margin-bottom: 0;
