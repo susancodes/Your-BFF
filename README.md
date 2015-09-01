@@ -93,7 +93,7 @@ Green markers with a tree icon indicate ONE unique campsite information.
 
 ---------------------
 
-##### Tech Stack & APIs
+### Tech Stack & APIs
 
 Python, SQLite database of airport codes and cities for autocomplete feature and database of campsites, geoJSON to format data to be used with Mapbox API, Google Charts API for the Fare Calendar, and Instagram API.
 
