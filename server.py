@@ -16,7 +16,7 @@ forecast_key = os.environ["FORECAST_KEY"]
 
 app = Flask(__name__)
 
-app.secret_key = "CUPCAKES"
+app.secret_key = os.environ["FLASK_SECRET_KEY"]
 
 
 class FlightDestinMarker(object):
