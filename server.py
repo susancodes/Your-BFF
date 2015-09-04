@@ -13,10 +13,12 @@ import os
 instagram_client_id = os.environ["INSTAGRAM_CLIENT_ID"]
 sabre_access_token = os.environ["SABRE_ACCESS_TOKEN"]
 forecast_key = os.environ["FORECAST_KEY"]
+flickr_key = os.environ["FLICKR_KEY"]
+flickr_secret = os.environ["FLICKR_SECRET"]
 
 app = Flask(__name__)
 
-app.secret_key = os.environ["FLASK_SECRET_KEY"]
+app.secret_key = ('cupcakes')
 
 
 class FlightDestinMarker(object):
@@ -300,9 +302,49 @@ def get_weather(lat, lon, date):
 	temp = response_json['hourly']['data'][0]['temperature']
 	
 	return temp
+	
+
+def get_flickr_photos():
+	"""Get Flickr Photos from city name tag."""
+
+	# lat = float(requests.args.get('lat'))
+	# lon = float(requests.args.get('lon'))
+
+	lat = 37
+	lon = -122
+
+
+	url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%s&lat=%s&lon=%s&radius=20&radius_units=mi&content-type=1&extras=url_z&safe_search=1&format=json&nojsoncallback=1" % (flickr_key, lat, lon)
+
+	response = requests.get(url)
+
+	response_json = response.json()
+
+	print response_json
+
+	photo_list = []
+
+
+	results = response_json["photos"]["photo"]
+	for img in results:
+
+		photo_title = img["title"]
+		photo_url = img["url_z"]
+
+		one_photo = {"img_url": photo_url, 
+					"caption": photo_title}
+
+		print one_photo['img_url']
+		photo_list.append(one_photo)
+
+
+	return json.dumps(photo_list)
+	
 
 
 
+
+	# print photo_list
 
 
 if __name__ == "__main__":

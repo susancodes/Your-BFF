@@ -350,7 +350,7 @@ function getInstagramPics(markerCity) {
 	console.log("getting instagram stuff")
 	var city = markerCity
 	console.log("city: " + city);
-	var url = "/instagram.json?city=" + city
+	var url = "/instagram.json?lat=" + lat + "&lon=" + lon
 	$('ul#instagram-photos').html('');
 
 	$.get(url, function(data) {
@@ -390,10 +390,20 @@ $("#airportcodes").autocomplete({
 // EVENT LISTENERS
 
 // when user clicks instagram button
-$('.map').on('click', '.instagram-btn', function() {
+$('.map').on('click', '.instagram-btn', function(e) {
     // alert("I'm doing instagram things!");
     var city = $("#city-name").text();
+    var layer = e.layer;
     console.log(city);
+
+    console.log(layer.getLatLng())
+
+
+    // var lat = layer.latlng.lat;
+    // console.log("lat: " + lat);
+    // var lon = layer.latlng.lng;
+    // console.log("lon: " + lon);
+
     getInstagramPics(city);
 
 });
