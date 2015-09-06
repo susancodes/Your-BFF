@@ -178,8 +178,10 @@ function processFareResults(geojsonFeature) {
 				'<p>Departure Date: ' + lowestFareDep.slice(0,10) + '</p>' +
 				'<p>Return Date: ' + lowestFareRet.slice(0,10) + '</p><hr color="#E94E77">' +
 				'<div id="fare-array" style="display: none" hidden>' + fareArray + '</div>' +
+				'<div id="coords-lat" style="display: none" hidden>' + feature.properties.lat + '</div>' +
+				'<div id="coords-lon" style="display: none" hidden>' + feature.properties.lon + '</div>' +
 				'<p><button class="chart-btn" data-toggle="modal" data-target="#curve-chart">View Other Flight Options</button></p>' + 
-				'<p id="instagram-box"><button class="instagram-btn" data-toggle="modal" data-target="#instagram-feed">Instagram Feed</button></p>' + 
+				'<p id="instagram-box"><button class="instagram-btn" data-toggle="modal" data-target="#instagram-feed">Flickr Feed</button></p>' + 
 				'</div>'
 				);
 
@@ -350,7 +352,27 @@ function getInstagramPics(markerCity) {
 	console.log("getting instagram stuff")
 	var city = markerCity
 	console.log("city: " + city);
-	var url = "/instagram.json?lat=" + lat + "&lon=" + lon
+	var url = "/instagram.json?city=" + city
+	$('ul#instagram-photos').html('');
+
+	$.get(url, function(data) {
+		var photos = JSON.parse(data)
+		console.log(photos);
+		for (i=0; i < photos.length; i++) {
+			var img_caption = photos[i].caption;
+			var img_url = photos[i].img_url;
+			$('ul#instagram-photos').append('<li><img src="' + img_url + '" title="'+ img_caption + '"></li>');
+		}
+	})
+}
+
+
+// FLICKR AJAX
+function getFlickrPics(lat, lon) {
+
+	console.log("getting instagram stuff")
+
+	var url = "/flickr.json?lat=" + lat + "&lon=" + lon
 	$('ul#instagram-photos').html('');
 
 	$.get(url, function(data) {
@@ -390,21 +412,30 @@ $("#airportcodes").autocomplete({
 // EVENT LISTENERS
 
 // when user clicks instagram button
-$('.map').on('click', '.instagram-btn', function(e) {
+$('.map').on('click', '.instagram-btn', function(evt) {
     // alert("I'm doing instagram things!");
+    debugger;
     var city = $("#city-name").text();
-    var layer = e.layer;
     console.log(city);
 
-    console.log(layer.getLatLng())
+    var lat = $("#coords-lat").text();
 
+    var lon = $("#coords-lon").text();
+
+    console.log(lat);
+    console.log(lon);
 
     // var lat = layer.latlng.lat;
     // console.log("lat: " + lat);
     // var lon = layer.latlng.lng;
     // console.log("lon: " + lon);
 
-    getInstagramPics(city);
+
+    // // use instagram feed
+    // getInstagramPics(city);
+
+    // use flickr feed
+    getFlickrPics(lat, lon);
 
 });
 

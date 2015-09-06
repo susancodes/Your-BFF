@@ -44,7 +44,9 @@ class FlightDestinMarker(object):
 					'marker-symbol': 'airport',
 					'id': self.id,
 					'city': self.city,
-					'fares': self.fares
+					'fares': self.fares,
+					'lat': self.lon,
+					'lon': self.lat
 				} 
 		}
 
@@ -249,6 +251,46 @@ def campsite_search():
 	return marker_geojson
 
 
+@app.route("/flickr.json")
+def get_flickr_photos():
+	"""Get Flickr Photos from city name tag."""
+
+	lat = request.args.get('lat')
+	lon = request.args.get('lon')
+
+	print "HERE'S MY LAT AND LON: ", lat, lon
+
+	# lat = 37
+	# lon = -122
+
+
+	url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%s&lat=%s&lon=%s&radius=20&radius_units=mi&content-type=1&extras=url_z&safe_search=1&format=json&nojsoncallback=1" % (flickr_key, lat, lon)
+
+	response = requests.get(url)
+
+	response_json = response.json()
+
+	print response_json
+
+	photo_list = []
+
+
+	results = response_json["photos"]["photo"]
+	for img in results:
+
+		photo_title = img["title"]
+		photo_url = img["url_z"]
+
+		one_photo = {"img_url": photo_url, 
+					"caption": photo_title}
+
+		print one_photo['img_url']
+		photo_list.append(one_photo)
+
+
+	return json.dumps(photo_list)
+
+
 @app.route("/instagram.json")
 def get_instagram(): 
 	""" Get instagram feed of tags with city name. """
@@ -302,7 +344,7 @@ def get_weather(lat, lon, date):
 	temp = response_json['hourly']['data'][0]['temperature']
 	
 	return temp
-	
+
 
 def get_flickr_photos():
 	"""Get Flickr Photos from city name tag."""
@@ -350,7 +392,7 @@ def get_flickr_photos():
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
     # that we invoke the DebugToolbarExtension
-    app.debug = False
+    app.debug = True
 
     connect_to_db(app)
 
