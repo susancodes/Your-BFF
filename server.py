@@ -40,7 +40,7 @@ class FlightDestinMarker(object):
 				},
 				'properties': {
 					'marker-color': '#E94E77',
-					'marker-size': 'medium',
+					'marker-size': 'large',
 					'marker-symbol': 'airport',
 					'id': self.id,
 					'city': self.city,
@@ -73,7 +73,7 @@ class CampsiteMarker(object):
 				},
 				'properties': {
 					'marker-color': '#379F7A',
-					'marker-size': 'medium',
+					'marker-size': 'large',
 					'marker-symbol': 'park',
 					'name': self.name,
 					'phone': self.phone,
