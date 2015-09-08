@@ -99,8 +99,8 @@ def autocomplete():
 	search_value = request.args.get('term')
 	print search_value
 
-	query = AirportCode.query.filter(db.or_(AirportCode.code.contains(search_value), 
-											AirportCode.location.contains(search_value))).all()
+	query = AirportCode.query.filter(db.or_(AirportCode.code.ilike("%%%s%%" % (search_value)), 
+											AirportCode.location.ilike("%%%s%%" % (search_value)))).all()
 	
 	suggestion_list = []
 
@@ -344,44 +344,6 @@ def get_weather(lat, lon, date):
 	temp = response_json['hourly']['data'][0]['temperature']
 	
 	return temp
-
-
-def get_flickr_photos():
-	"""Get Flickr Photos from city name tag."""
-
-	# lat = float(requests.args.get('lat'))
-	# lon = float(requests.args.get('lon'))
-
-	lat = 37
-	lon = -122
-
-
-	url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%s&lat=%s&lon=%s&radius=20&radius_units=mi&content-type=1&extras=url_z&safe_search=1&format=json&nojsoncallback=1" % (flickr_key, lat, lon)
-
-	response = requests.get(url)
-
-	response_json = response.json()
-
-	print response_json
-
-	photo_list = []
-
-
-	results = response_json["photos"]["photo"]
-	for img in results:
-
-		photo_title = img["title"]
-		photo_url = img["url_z"]
-
-		one_photo = {"img_url": photo_url, 
-					"caption": photo_title}
-
-		print one_photo['img_url']
-		photo_list.append(one_photo)
-
-
-	return json.dumps(photo_list)
-	
 
 
 
