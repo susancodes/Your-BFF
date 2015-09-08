@@ -1,5 +1,6 @@
 
 from flask_sqlalchemy import SQLAlchemy
+import psycopg2
 
 db = SQLAlchemy()
 
@@ -59,7 +60,7 @@ def connect_to_db(app):
 
     # Configure to use SQLite database
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///airportandcampsites.db'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/airportandcampsites.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/ac'
     db.app = app
     db.init_app(app)
 
