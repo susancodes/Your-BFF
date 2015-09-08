@@ -12,13 +12,13 @@ import os
 
 instagram_client_id = os.environ["INSTAGRAM_CLIENT_ID"]
 sabre_access_token = os.environ["SABRE_ACCESS_TOKEN"]
-forecast_key = os.environ["FORECAST_KEY"]
 flickr_key = os.environ["FLICKR_KEY"]
 flickr_secret = os.environ["FLICKR_SECRET"]
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "ABCDEF")
+
 
 app = Flask(__name__)
 
-app.secret_key = ('cupcakes')
 
 
 class FlightDestinMarker(object):
@@ -330,20 +330,22 @@ def get_instagram():
 	return json.dumps(photo_list)
 
 
-def get_weather(lat, lon, date):
+# def get_weather(lat, lon, date):
 
-	datetime = date + "T12:00:00"
+#	forecast_key = os.environ["FORECAST_KEY"]
 
-	url = "https://api.forecast.io/forecast/%s/%s,%s,%s" % (forecast_key, lat, lon, datetime)
+# 	datetime = date + "T12:00:00"
 
-	response = requests.get(url)
+# 	url = "https://api.forecast.io/forecast/%s/%s,%s,%s" % (forecast_key, lat, lon, datetime)
 
-	response_json = response.json()
+# 	response = requests.get(url)
+
+# 	response_json = response.json()
 
 	
-	temp = response_json['hourly']['data'][0]['temperature']
+# 	temp = response_json['hourly']['data'][0]['temperature']
 	
-	return temp
+# 	return temp
 
 
 
