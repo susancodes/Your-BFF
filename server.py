@@ -386,9 +386,6 @@ def get_flickr_photos():
 
 
 
-	# print photo_list
-
-
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
     # that we invoke the DebugToolbarExtension
