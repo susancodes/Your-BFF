@@ -381,7 +381,7 @@ function getFlickrPics(lat, lon, city) {
 
 		$("#myModalLabelCity").text("Flickr Feed for " + city);
 
-		for (i=0; i < photos.length; i++) {
+		for (i=2; i < photos.length; i++) {
 			var img_caption = photos[i].caption;
 			var img_url = photos[i].img_url;
 			$('ul#instagram-photos').append('<li><img src="' + img_url + '" title="'+ img_caption + '"></li>');
