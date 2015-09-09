@@ -14,10 +14,12 @@ instagram_client_id = os.environ["INSTAGRAM_CLIENT_ID"]
 sabre_access_token = os.environ["SABRE_ACCESS_TOKEN"]
 flickr_key = os.environ["FLICKR_KEY"]
 flickr_secret = os.environ["FLICKR_SECRET"]
-app.secret_key = os.environ.get("FLASK_SECRET_KEY", "ABCDEF")
 
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "ABCDEF")
+
+
 
 
 
