@@ -355,8 +355,7 @@ if __name__ == "__main__":
     # that we invoke the DebugToolbarExtension
 	connect_to_db(app)
 	PORT = int(os.environ.get("PORT", 5000))
-	
-    DebugToolbarExtension(app)
+	DebugToolbarExtension(app)
 	DEBUG = "NO_DEBUG" not in os.environ
 	
 	# Use the DebugToolbar
