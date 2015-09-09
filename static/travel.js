@@ -379,7 +379,7 @@ function getFlickrPics(lat, lon, city) {
 		var photos = JSON.parse(data);
 		console.log(photos);
 
-		$("#myModalLabelCity").text("Flickr Feed for" + city);
+		$("#myModalLabelCity").text("Flickr Feed for " + city);
 
 		for (i=0; i < photos.length; i++) {
 			var img_caption = photos[i].caption;
