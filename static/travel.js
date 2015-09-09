@@ -368,7 +368,7 @@ function getInstagramPics(markerCity) {
 
 
 // FLICKR AJAX
-function getFlickrPics(lat, lon) {
+function getFlickrPics(lat, lon, city) {
 
 	console.log("getting instagram stuff")
 
@@ -378,6 +378,9 @@ function getFlickrPics(lat, lon) {
 	$.get(url, function(data) {
 		var photos = JSON.parse(data)
 		console.log(photos);
+
+		$("#myModalLabel").text(city)
+
 		for (i=0; i < photos.length; i++) {
 			var img_caption = photos[i].caption;
 			var img_url = photos[i].img_url;
@@ -435,7 +438,7 @@ $('.map').on('click', '.instagram-btn', function(evt) {
     // getInstagramPics(city);
 
     // use flickr feed
-    getFlickrPics(lat, lon);
+    getFlickrPics(lat, lon, city);
 
 });
 
