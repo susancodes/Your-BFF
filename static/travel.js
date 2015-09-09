@@ -370,16 +370,16 @@ function getInstagramPics(markerCity) {
 // FLICKR AJAX
 function getFlickrPics(lat, lon, city) {
 
-	console.log("getting instagram stuff")
+	console.log("getting Flickr images")
 
 	var url = "/flickr.json?lat=" + lat + "&lon=" + lon
 	$('ul#instagram-photos').html('');
 
 	$.get(url, function(data) {
-		var photos = JSON.parse(data)
+		var photos = JSON.parse(data);
 		console.log(photos);
 
-		$("#myModalLabel").text(city)
+		$("#myModalLabelCity").text("Flickr Feed for" + city);
 
 		for (i=0; i < photos.length; i++) {
 			var img_caption = photos[i].caption;
