@@ -17,6 +17,7 @@ flickr_secret = os.environ["FLICKR_SECRET"]
 
 
 app = Flask(__name__)
+
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "ABCDEF")
 
 
@@ -353,16 +354,16 @@ def get_instagram():
 
 
 if __name__ == "__main__":
-    # We have to set debug=True here, since it has to be True at the point
-    # that we invoke the DebugToolbarExtension
+
 	connect_to_db(app)
 	PORT = int(os.environ.get("PORT", 5000))
 	DebugToolbarExtension(app)
+
 	DEBUG = "NO_DEBUG" not in os.environ
-	
-	# Use the DebugToolbar
 
 	app.run(debug=DEBUG, host="0.0.0.0", port=PORT)
+
+
 
 
 
