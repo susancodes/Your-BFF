@@ -65,7 +65,7 @@ def connect_to_db(app):
                               "postgresql://localhost/ac")
     # Configure to use SQLite database
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///airportandcampsites.db'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'DATABASE_URL'
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
     db.app = app
     db.init_app(app)
 
