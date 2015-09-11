@@ -120,7 +120,7 @@ I chose to make a single-page webapp because I wanted to be more fluent in Javas
 
 ### <a name="credits"></a>Credits
 
-Credits to Sabre & Cometari for providing flight information, USCampgrounds for the campsite data, Mapbox for the beautiful map UI, Instagram for the photo feed, and Google Charts API.
+Credits to [Sabre](https://developer.sabre.com/) & [Cometari](http://www.cometari.com/) for providing flight information, [USCampgrounds](http://www.uscampgrounds.info/) for the campsite data, [Mapbox](https://www.mapbox.com/) for the beautiful map UI, Instagram for the photo feed, and Google Charts API.
 
 
 ### <a name="about-me"></a>About the Developer
