@@ -130,7 +130,7 @@ Credits to [Sabre](https://developer.sabre.com/) & [Cometari](http://www.cometar
 
 ### <a name="about-app"></a>About This WebApp
 
-Travel is a lot more than visiting a place that is not your home. It opens up a new world of culture, perspective, and opportunities to try new things. Travel is very expensive and also time consuming. The developer of this webapp hopes to encourage people to travel regardless of monetary limits. This webapp provides the options so the user can make better and smarter decisions to stretch his/her dollar while getting to see the world. It uses live flight data from Sabre so anyone can make a search to go anywhere around the world. The sky is the limit. 
+Travel is a lot more than visiting a place that is not your home. It opens up a new world of culture, perspective, and opportunities to try new things. The developer of this webapp hopes to encourage people to travel regardless of monetary limits. This webapp provides the options so the user can make better and smarter decisions to stretch his/her dollar while getting to see the world. It uses live flight data from Sabre so anyone can make a search to go anywhere around the world. The sky is the limit. 
 
 
 
