@@ -12,7 +12,7 @@ Curently deployed [here](https://yourbff.herokuapp.com/)!
 * [Tech Stack](#tech-stack)
 * [Credits](#credits)
 * [About The Developer](#about-me)
-
+* [About The WebApp](#about-app)
 
 
 ---------------------
@@ -36,6 +36,8 @@ Curently deployed [here](https://yourbff.herokuapp.com/)!
 - Max Budget
 > Enter a dollar amount to search for roundtrip flights
 
+
+![image](https://cloud.githubusercontent.com/assets/12265692/9803883/6663ac8c-57dc-11e5-80a0-f34c42bf8c6d.png)
 
 -------------------
 
@@ -124,4 +126,12 @@ Credits to Sabre & Cometari for providing flight information, USCampgrounds for 
 ### <a name="about-me"></a>About the Developer
 
 [Susan Chin](https://www.linkedin.com/in/susanschin) is part of the Summer 2015 Hackbright Academy Full-Time Software Engineering Immersive Fellowship for women. The fellowship is a total of 10-weeks long with the first half focused on structured lectures and lab time and the second half focused on a personal project. This is Susan's project to showcase what she's learned from the accelerated program.
+
+
+### <a name="about-app"></a>About This WebApp
+
+Travel is a lot more than visiting a place that is not your home. It opens up a new world of culture, perspective, and opportunities to try new things. Travel is very expensive and also time consuming. The developer of this webapp hopes to encourage people to travel regardless of monetary limits. This webapp provides the options so the user can make better and smarter decisions to stretch his/her dollar while getting to see the world. It uses live flight data from Sabre so anyone can make a search to go anywhere around the world. The sky is the limit. 
+
+
+
 
