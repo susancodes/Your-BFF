@@ -358,6 +358,9 @@ function getInstagramPics(markerCity) {
 	$.get(url, function(data) {
 		var photos = JSON.parse(data)
 		console.log(photos);
+
+		$("#myModalLabelCity").text("Instagram Feed for " + city);
+
 		for (i=0; i < photos.length; i++) {
 			var img_caption = photos[i].caption;
 			var img_url = photos[i].img_url;
@@ -379,11 +382,13 @@ function getFlickrPics(lat, lon, city) {
 		var photos = JSON.parse(data);
 		console.log(photos);
 
-		$("#myModalLabelCity").text("Flickr Feed for " + city);
 
 		if (photos.length === 0) {
 			getInstagramPics(city);
 		} else {
+
+			$("#myModalLabelCity").text("Flickr Feed for " + city);
+
 			for (i=0; i < photos.length; i++) {
 				var img_caption = photos[i].caption;
 				var img_url = photos[i].img_url;
@@ -432,15 +437,6 @@ $('.map').on('click', '.instagram-btn', function(evt) {
 
     console.log(lat);
     console.log(lon);
-
-    // var lat = layer.latlng.lat;
-    // console.log("lat: " + lat);
-    // var lon = layer.latlng.lng;
-    // console.log("lon: " + lon);
-
-
-    // // use instagram feed
-    // getInstagramPics(city);
 
     // use flickr feed
     getFlickrPics(lat, lon, city);
@@ -498,21 +494,6 @@ function emptyMapMessage() {
 }
 
 
-
-function cycleImages(){
-      var $active = $('#cycler .active');
-      var $next = ($active.next().length > 0) ? $active.next() : $('#cycler img:first');
-      $next.css('z-index',2);//move the next image up the pile
-      $active.fadeOut(1500,function(){//fade out the top image
-	  $active.css('z-index',1).show().removeClass('active');//reset the z-index and unhide the image
-          $next.css('z-index',3).addClass('active');//make the next image the top one
-      });
-    }
-
-$(document).ready(function(){
-// run every 7s
-setInterval('cycleImages()', 7000);
-})
 
 
 
