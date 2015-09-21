@@ -97,10 +97,9 @@ def homepage():
 
 @app.route("/autocomplete")
 def autocomplete():
-	"""Using AJAX, providing autocomplete in the form input from database info."""
+	"""From airport codes database, provide autocomplete in user's arrival input using AJAX."""
 
 	search_value = request.args.get('term')
-	print search_value
 
 	query = AirportCode.query.filter(db.or_(AirportCode.code.ilike("%%%s%%" % (search_value)), 
 											AirportCode.location.ilike("%%%s%%" % (search_value)))).all()
@@ -113,7 +112,7 @@ def autocomplete():
 		suggestion_string = "(%s) %s" %(code, location)
 		suggestion_list.append(suggestion_string)
 	
-	print suggestion_list
+	# print suggestion_list
 	
 	return jsonify(data=suggestion_list)
 
@@ -134,44 +133,46 @@ def airfare_search():
 	headers = {"Authorization": sabre_access_token}
 
 	base_url = "http://bridge2.sabre.cometari.com/shop/flights/fares?"
-	# param_url = "origin=SFO&earliestdeparturedate=2015-09-01&latestdeparturedate=2015-09-09&lengthofstay=3&maxfare=500&pointofsalecountry=US&ac2lonlat=1" 
 	param_url = "origin=%s&earliestdeparturedate=%s&latestdeparturedate=%s&lengthofstay=%s&maxfare=%s&pointofsalecountry=US&ac2lonlat=1" % (
 		origin, earliest_departure, latest_departure, length_of_stay, max_budget)
+	
+	# USE BELOW URL FOR TESTING PURPOSES
+	# param_url = "origin=SFO&earliestdeparturedate=2015-09-01&latestdeparturedate=2015-09-09&lengthofstay=3&maxfare=500&pointofsalecountry=US&ac2lonlat=1" 
 	
 	# putting together the url to request to Sabre's API
 	final_url = base_url + param_url
 
-	# calling the API
 	response = requests.get(final_url, headers=headers)
 
-
-	# converting response to json
 	response_text = response.json()
 
+	# easier json read format
 	pprint.pprint(response_text)
 
 	fare_list = []
 
 	for item in response_text:
+
 		airport_code = item["id"]
 		city = item["city"]
+
+		# must double check if valid coords. API sometimes returns invalid destinations
 		check_type = type(item["coords"]["latitude"])
-		if check_type == type(u'-85.736389000000003'):
+		if check_type == type(u'-85.73'):
 			lat = float(item["coords"]["latitude"])
 		else: 
 			continue
 
 		check_type = type(item["coords"]["longitude"])
-		if check_type == type(u'-85.736389000000003'):
+		if check_type == type(u'-85.73'):
 			lon = float(item["coords"]["longitude"])
 		else:
 			continue
 
 		fares = item["fares"]
-		# print airport_code, city, lat, lon, fares
 
-		print "LOWEST FARE:", fares[0]["lowestFare"]
 
+		# must clean up invalid fares that are $0
 		if fares[0]["lowestFare"] == 0:
 			continue
 		else:
@@ -185,6 +186,7 @@ def airfare_search():
 	
 
 	# import pdb; pdb.set_trace()
+	# this returns geojson
 	marker_geojson = geojson.dumps(marker_collection, sort_keys=True)
 
 	return marker_geojson
@@ -199,11 +201,8 @@ def campsite_search():
 
 	origin = request.args.get('origin')
 	origin = origin[1:4]
-	print origin
 
 	origin_object = AirportCode.query.filter(AirportCode.code==origin).first()
-
-	print origin_object
 
 	# 1.0 degrees is about 69 miles
 
@@ -211,25 +210,21 @@ def campsite_search():
 	lower_lat = lat - 1
 	higher_lat = lat + 1
 
-	print lat, lower_lat, higher_lat
-
 	lon = origin_object.longitude
 	lower_lon = lon - 1
 	higher_lon = lon + 1
 
-	print lon, lower_lon, higher_lon
-
+	# finding campsites that match the latitutde range first
 	query_lat = Campsite.query.filter(Campsite.latitude < higher_lat,
 											Campsite.longitude < higher_lon)
 
-	length_first = len(query_lat.all())
-
+	# from the query above, finding campsites that match the longitude range
 	query_lat_lon = query_lat.filter(Campsite.latitude > lower_lat,
 											Campsite.longitude > lower_lon).all()
 
+	# building my dictionary to pass as JSON
 	campsite_list = []
 
-	# building my dictionary to pass as JSON
 	for item in query_lat_lon:
 		name = item.name
 		lat = item.latitude
@@ -239,6 +234,7 @@ def campsite_search():
 		comments = item.comments
 		campsites = item.campsites
 
+		# passing info to CampsiteMarker class to convert to geoJSON
 		campsite_info = CampsiteMarker(name, lat, lon, phone, dates, comments, campsites)
 
 		campsite_list.append(campsite_info)
