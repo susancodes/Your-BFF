@@ -127,6 +127,8 @@ Credits to [Sabre](https://developer.sabre.com/) & [Cometari](http://www.cometar
 
 [Susan Chin](https://www.linkedin.com/in/susanschin) is part of the Summer 2015 Hackbright Academy Full-Time Software Engineering Immersive Fellowship for women. The fellowship is a total of 10-weeks long with the first half focused on structured lectures and lab time and the second half focused on a personal project. This is Susan's project to showcase what she's learned from the accelerated program.
 
+Susan loves to debug so if you find any bugs in this project (which you will), please let her know!
+
 
 ### <a name="about-app"></a>About This WebApp
 
