@@ -110,7 +110,7 @@ Green markers with a tree icon indicate ONE unique campsite information.
 
 ### <a name="tech-stack"></a>Tech Stack & APIs
 
-Python, SQLite database of airport codes and cities for autocomplete feature and database of campsites, geoJSON to format data to be used with Mapbox API, Google Charts API for the Fare Calendar, and Instagram API.
+Python, SQLite (migrated later to PostgreSQL to deploy on Heroku) database of airport codes and cities for autocomplete feature and database of campsites, geoJSON to format data to be used with Mapbox API, Google Charts API for the Fare Calendar, and Instagram API.
 
 I chose to make a single-page webapp because I wanted to be more fluent in Javascript and AJAX. I also wanted the user to be able to modify their budget on the spot and not have to navigate to another page. Once the user modifies their budget, I wanted the results to be shown dynamically on the same page which required clearing the current data markers on the map and repopulating a different set of markers under the new criteria that the user specified.
 
