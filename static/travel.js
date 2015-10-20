@@ -85,6 +85,8 @@ function getFareResults(evt){
 	evt.preventDefault();
 	console.log("prevented default");
 
+	//google analytics click event
+	ga('send', 'event', 'form', 'submit', 'Find Travel');
 
 	// sending GET request to get form values
 	var url = "/airfaresearch.json?origin=" + $("#airportcodes").val() + 
