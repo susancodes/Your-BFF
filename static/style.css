@@ -76,6 +76,10 @@ nav.navbar.navbar-default.navbar-fixed-top {
 /*FORM STUFF*/
 .row .form-group {
     margin: 0;
+    background-color: #fff;
+    margin-top: 10px;
+    border: 1px solid #64908A;
+
 }
 
 label, input{
@@ -84,32 +88,18 @@ label, input{
 }
 
 input{ 
-    width: 100%; 
-    height: 100%; 
-    padding: 2.25em 1em 1em; 
-    outline: 0;
-    border: 1px solid #64908A;
+    width: 100%;
+    height: 45px;
+    padding: 3px;
+    padding-left: 7px;
 }
 
 .row .form-group > label {
     font-size: .85em; /* 13/16 */
-    position: absolute;
-    left: 1.23em;
+    margin-left: 7px;
+    margin-top: 3px;
     color: #64908A;
     opacity: 1;
-    -webkit-transition: .333s ease top, .333s ease opacity;
-    transition: .333s ease top, .333s ease opacity;
-}
-
-.js-hide-label label {
-    opacity: 0; 
-    top: 1.5em
-    border: 2px dotted red;
-}
-
-.js-unhighlight-label label {
-    color: #999
-    border: 2px solid gray;
 }
 
 
@@ -126,11 +116,6 @@ input[type="submit"] {
     transition: .333s ease transform;
 }
 
-input[type="submit"]:hover {
-    -webkit-transform: scale(1.025);
-    transform: scale(1.025);
-    cursor: pointer;
-}
 
 input[type="submit"]:active {
     -webkit-transform: scale(.975);
@@ -223,6 +208,14 @@ img.icon {
 
 }
 
+div.form-wrapper.container {
+    width: 250px;
 
+}
+
+a:focus, a:hover {
+    color: #000;
+    text-decoration: none;
+}
 
 
